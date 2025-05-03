@@ -1,0 +1,72 @@
+# Como o estado foi resetado, recriando o arquivo HTML novamente
+html_content = """
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divina Opção</title>
+  <style>
+    body {
+      background: #fdf6e3 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      font-family: 'Georgia', serif;
+      color: #3e2f1c;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #5a3825;
+      color: #f5deb3;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border: 2px solid #8b5c2f;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    h1, h2 {
+      font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    footer {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #5a3825;
+      color: #f5deb3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Divina Opção</h1>
+    <p>Onde cada escolha é uma semente do destino...</p>
+  </header>
+  <main>
+    <h2>Bem-vindo, aventureiro!</h2>
+    <p>Este é o início da sua jornada por Apolisgard. Em breve, a loja abrirá suas portas para que você possa equipar seu herói, criar sua ficha interativa e participar de campanhas épicas.</p>
+    <p>O site está sendo forjado com magia ancestral. Volte logo para explorar todas as possibilidades!</p>
+  </main>
+  <footer>
+    &copy; 2025 Divina Opção - Todos os direitos reservados.
+  </footer>
+</body>
+</html>
+"""
+
+# Salvando o conteúdo como arquivo HTML novamente
+file_path = "/mnt/data/index.html"
+with open(file_path, "w", encoding="utf-8") as file:
+    file.write(html_content)
+
+file_path

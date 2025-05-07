@@ -2,24 +2,153 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Ficha do Personagem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Perfil Editável do Personagem - Divina Opção (D&D)">
+    <title>Perfil Editável - Divina Opção</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: url('https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-0d4c-61f7-8ee6-76c3deb81591/raw?se=2025-05-08T00%3A20%3A11Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=bbd22fc4-f881-4ea4-b2f3-c12033cf6a8b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-07T22%3A20%3A21Z&ske=2025-05-08T22%3A20%3A21Z&sks=b&skv=2024-08-04&sig=O0zcfcEoIyoEHLq%2BB/u4/R50XcBVfa6H/w75BZ0Umeg%3D') no-repeat center center fixed;
+            background-size: cover;
+            color: #f0eada;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .profile-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid #daa520;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px #000;
+        }
+        select, button {
+            font-size: 1em;
+            margin: 5px;
+            padding: 5px 10px;
+            border: 2px solid #daa520;
+            border-radius: 5px;
+            background-color: rgba(139, 69, 19, 0.8);
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover, select:hover {
+            background-color: #daa520;
+            color: #000;
+        }
+        .attributes {
+            margin: 20px 0;
+            text-align: left;
+        }
+        .attribute {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .attribute span {
+            font-weight: bold;
+            color: #ffdd57;
+        }
+        .selection {
+            margin: 20px 0;
+        }
+    </style>
 </head>
-<body style="background-color:#121212; color:#f2f2f2; font-family:Georgia, serif; text-align:center; padding:40px;">
-    <h1>Ficha do Personagem</h1>
-    <p><strong>Nome:</strong> Arkan</p>
-    <p><strong>Classe:</strong> Guerreiro</p>
-    <p><strong>Raça:</strong> Humano</p>
-    <p><strong>Nível:</strong> 1</p>
-    <p><strong>Força:</strong> 16</p>
-    <p><strong>Destreza:</strong> 13</p>
-    <p><strong>Constituição:</strong> 14</p>
-    <p><strong>Inteligência:</strong> 10</p>
-    <p><strong>Sabedoria:</strong> 11</p>
-    <p><strong>Carisma:</strong> 12</p>
-    <p><strong>Itens Equipados:</strong></p>
-    <ul>
-        <li>Espada Curta</li>
-        <li>Armadura de Couro</li>
-    </ul>
+<body>
+    <h1>Perfil Editável do Personagem</h1>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>Nome do Personagem: <span id="nome-personagem">Aragorn</span></h2>
+        </div>
+        <div class="selection">
+            <h3>Raça:</h3>
+            <select id="raca">
+                <option value="anao">Anão</option>
+                <option value="elfo">Elfo</option>
+                <option value="humano">Humano</option>
+                <option value="meio-elfo">Meio-Elfo</option>
+                <option value="gnomo">Gnomo</option>
+                <option value="orc">Orc</option>
+                <option value="bugbear">Bugbear</option>
+                <option value="aasimar">Aasimar</option>
+                <option value="tiefling">Tiefling</option>
+                <option value="halfling">Halfling</option>
+                <option value="forjado-pela-guerra">Forjado-pela-Guerra</option>
+                <option value="shifter">Shifter</option>
+                <option value="tritao">Tritão</option>
+                <option value="kobold">Kobold</option>
+                <option value="goblin">Goblin</option>
+                <option value="hobgoblin">Hobgoblin</option>
+                <option value="drow">Drow</option>
+                <option value="wood-elf">Wood Elf</option>
+                <option value="high-elf">High Elf</option>
+                <option value="dragonborn">Dragonborn</option>
+                <option value="grung">Grung</option>
+            </select>
+        </div>
+        <div class="selection">
+            <h3>Classe:</h3>
+            <select id="classe">
+                <option value="barbaro">Bárbaro</option>
+                <option value="bardo">Bardo</option>
+                <option value="clerigo">Clérigo</option>
+                <option value="druida">Druida</option>
+                <option value="guerreiro">Guerreiro</option>
+                <option value="mago">Mago</option>
+                <option value="monge">Monge</option>
+                <option value="paladino">Paladino</option>
+                <option value="ladino">Ladino</option>
+                <option value="ranger">Ranger</option>
+                <option value="feiticeiro">Feiticeiro</option>
+                <option value="bruxo">Bruxo</option>
+                <option value="artifice">Artífice</option>
+                <option value="cavalheiro">Cavalheiro</option>
+                <option value="xama">Xamã</option>
+            </select>
+        </div>
+        <div class="attributes">
+            <h3>Atributos:</h3>
+            <div class="attribute">
+                <span>Força:</span>
+                <button onclick="alterarAtributo('forca', -1)">-</button>
+                <span id="forca">18</span>
+                <button onclick="alterarAtributo('forca', 1)">+</button>
+            </div>
+            <div class="attribute">
+                <span>Destreza:</span>
+                <button onclick="alterarAtributo('destreza', -1)">-</button>
+                <span id="destreza">14</span>
+                <button onclick="alterarAtributo('destreza', 1)">+</button>
+            </div>
+            <div class="attribute">
+                <span>Inteligência:</span>
+                <button onclick="alterarAtributo('inteligencia', -1)">-</button>
+                <span id="inteligencia">12</span>
+                <button onclick="alterarAtributo('inteligencia', 1)">+</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const atributos = {
+            forca: 18,
+            destreza: 14,
+            inteligencia: 12,
+        };
+
+        function alterarAtributo(atributo, valor) {
+            if (atributos[atributo] + valor >= 0) {
+                atributos[atributo] += valor;
+                document.getElementById(atributo).textContent = atributos[atributo];
+            }
+        }
+    </script>
 </body>
 </html>

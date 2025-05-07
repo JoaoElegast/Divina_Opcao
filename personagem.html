@@ -8,8 +8,7 @@
     <style>
         body {
             font-family: 'Georgia', serif;
-            background: url('https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-0d4c-61f7-8ee6-76c3deb81591/raw?se=2025-05-08T00%3A20%3A11Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=bbd22fc4-f881-4ea4-b2f3-c12033cf6a8b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-07T22%3A20%3A21Z&ske=2025-05-08T22%3A20%3A21Z&sks=b&skv=2024-08-04&sig=O0zcfcEoIyoEHLq%2BB/u4/R50XcBVfa6H/w75BZ0Umeg%3D') no-repeat center center fixed;
-            background-size: cover;
+            background-color: #4b2e2e; /* Tom de marrom */
             color: #f0eada;
             text-align: center;
             padding: 20px;
@@ -129,10 +128,28 @@
                 <button onclick="alterarAtributo('destreza', 1)">+</button>
             </div>
             <div class="attribute">
+                <span>Constituição:</span>
+                <button onclick="alterarAtributo('constituicao', -1)">-</button>
+                <span id="constituicao">15</span>
+                <button onclick="alterarAtributo('constituicao', 1)">+</button>
+            </div>
+            <div class="attribute">
                 <span>Inteligência:</span>
                 <button onclick="alterarAtributo('inteligencia', -1)">-</button>
                 <span id="inteligencia">12</span>
                 <button onclick="alterarAtributo('inteligencia', 1)">+</button>
+            </div>
+            <div class="attribute">
+                <span>Sabedoria:</span>
+                <button onclick="alterarAtributo('sabedoria', -1)">-</button>
+                <span id="sabedoria">14</span>
+                <button onclick="alterarAtributo('sabedoria', 1)">+</button>
+            </div>
+            <div class="attribute">
+                <span>Carisma:</span>
+                <button onclick="alterarAtributo('carisma', -1)">-</button>
+                <span id="carisma">16</span>
+                <button onclick="alterarAtributo('carisma', 1)">+</button>
             </div>
         </div>
     </div>
@@ -140,7 +157,10 @@
         const atributos = {
             forca: 18,
             destreza: 14,
+            constituicao: 15,
             inteligencia: 12,
+            sabedoria: 14,
+            carisma: 16,
         };
 
         function alterarAtributo(atributo, valor) {

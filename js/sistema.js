@@ -11,11 +11,20 @@ const loja = [
   { nome: "Poção de Magia", preco: 25, img: "pocao_magia.png" },
 ];
 
-let moedas = localStorage.getItem("moedas") ? parseInt(localStorage.getItem("moedas")) : 100;
-let inventario = JSON.parse(localStorage.getItem("inventario")) || [];
+// Inicialização segura
+let moedas = localStorage.getItem("moedas") 
+  ? parseInt(localStorage.getItem("moedas")) 
+  : 100;
+
+let inventario = localStorage.getItem("inventario") 
+  ? JSON.parse(localStorage.getItem("inventario")) 
+  : [];
 
 function atualizarMoedas() {
-  document.getElementById("moedas")?.innerText = moedas;
+  const moedasSpan = document.getElementById("moedas");
+  if (moedasSpan) {
+    moedasSpan.innerText = moedas;
+  }
   localStorage.setItem("moedas", moedas);
 }
 
@@ -25,6 +34,10 @@ function salvarInventario() {
 
 function carregarLoja() {
   const lojaDiv = document.getElementById("itens-loja");
+  if (!lojaDiv) return;
+
+  lojaDiv.innerHTML = ""; // Evita duplicação
+
   loja.forEach((item, i) => {
     const el = document.createElement("div");
     el.classList.add("item");
@@ -36,6 +49,7 @@ function carregarLoja() {
     `;
     lojaDiv.appendChild(el);
   });
+
   atualizarMoedas();
 }
 
@@ -54,10 +68,15 @@ function comprar(index) {
 
 function carregarInventario() {
   const invDiv = document.getElementById("inventario");
-  if (!inventario.length) {
+  if (!invDiv) return;
+
+  invDiv.innerHTML = "";
+
+  if (inventario.length === 0) {
     invDiv.innerHTML = "<p>Inventário vazio.</p>";
     return;
   }
+
   inventario.forEach(item => {
     const el = document.createElement("div");
     el.classList.add("item");
@@ -69,5 +88,8 @@ function carregarInventario() {
   });
 }
 
-if (document.getElementById("itens-loja")) carregarLoja();
-if (document.getElementById("inventario")) carregarInventario();
+// Inicialização automática conforme a página
+window.addEventListener("DOMContentLoaded", () => {
+  carregarLoja();
+  carregarInventario();
+});

@@ -1,0 +1,72 @@
+name: Atualizar código com OpenAI
+
+on:
+  workflow_dispatch:  # Você roda isso manualmente
+
+jobs:
+  atualizar_arquivo:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checar repositório
+      uses: actions/checkout@v3
+      
+    - name: Rodar Script Python
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python3 <<EOF
+        import os
+        import requests
+        import base64
+        import openai
+
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        repo = os.getenv("GITHUB_REPOSITORY")
+        token = os.getenv("GITHUB_TOKEN")
+        arquivo = "index.html"
+        branch = "main"
+
+        prompt = "Crie um código HTML que exiba Olá, mundo! e um botão."
+
+        resposta = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=300,
+            temperature=0.5
+        )
+
+        codigo_gerado = resposta['choices'][0]['message']['content']
+
+        headers = {
+            "Authorization": f"token {token}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+
+        url_get = f"https://api.github.com/repos/{repo}/contents/{arquivo}?ref={branch}"
+        resposta_get = requests.get(url_get, headers=headers)
+        if resposta_get.status_code == 200:
+            sha = resposta_get.json()['sha']
+        else:
+            print("Arquivo não encontrado, criando novo.")
+            sha = None
+
+        conteudo_base64 = base64.b64encode(codigo_gerado.encode()).decode()
+
+        data = {
+            "message": "Atualizar arquivo via GitHub Actions + OpenAI",
+            "content": conteudo_base64,
+            "branch": branch
+        }
+        if sha:
+            data["sha"] = sha
+
+        url_put = f"https://api.github.com/repos/{repo}/contents/{arquivo}"
+        resposta_put = requests.put(url_put, headers=headers, json=data)
+
+        if resposta_put.status_code in [200, 201]:
+            print("Arquivo atualizado com sucesso!")
+        else:
+            print("Erro ao atualizar arquivo:", resposta_put.text)
+        EOF

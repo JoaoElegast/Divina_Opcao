@@ -16,6 +16,7 @@ let moedas = 100;
 document.getElementById("moedas").textContent = moedas;
 
 const container = document.getElementById("itens-loja");
+const inventarioContainer = document.getElementById("inventario");
 
 itensLoja.forEach(item => {
   const card = document.createElement("div");
@@ -33,16 +34,47 @@ itensLoja.forEach(item => {
   container.appendChild(card);
 });
 
+// Função para usar o item
 function usarItem(arquivo) {
   window.open(`html_itens_rpg/${arquivo}`, '_blank');
 }
 
+// Função para comprar um item
 function comprarItem(nome, preco) {
   if (moedas >= preco) {
     moedas -= preco;
     document.getElementById("moedas").textContent = moedas;
     alert(`Você comprou ${nome} por ${preco} PO!`);
+    adicionarAoInventario(nome, preco);
   } else {
     alert("Você não tem ouro suficiente!");
   }
+}
+
+// Função para adicionar item ao inventário
+function adicionarAoInventario(nome, preco) {
+  const itemInventario = document.createElement("div");
+  itemInventario.classList.add("item");
+
+  itemInventario.innerHTML = `
+    <h3>🧾 ${nome}</h3>
+    <p>Preço de venda: <strong>${preco / 2} PO</strong></p>
+    <div class="botoes">
+      <button class="vender" onclick="venderItem('${nome}', ${preco / 2})">💰 Vender</button>
+    </div>
+  `;
+
+  inventarioContainer.appendChild(itemInventario);
+}
+
+// Função para vender o item
+function venderItem(nome, precoVenda) {
+  moedas += precoVenda;
+  document.getElementById("moedas").textContent = moedas;
+  
+  // Remover o item do inventário
+  const item = event.target.closest('.item');
+  item.remove();
+
+  alert(`Você vendeu ${nome} por ${precoVenda} PO!`);
 }

@@ -1,0 +1,72 @@
+/* Estilo Medieval - Loja e Inventário */
+body {
+  font-family: 'Georgia', serif;
+  background-color: #2b1d0e;
+  color: #fdf5d5;
+  margin: 0;
+  padding: 0;
+}
+
+header, footer {
+  text-align: center;
+  background-color: #6b4c1a;
+  padding: 20px 10px;
+  border-bottom: 3px solid #3e2a0e;
+}
+
+h1 {
+  color: #ffd700;
+  font-size: 2.5em;
+}
+
+p, h2 {
+  font-size: 1.2em;
+}
+
+main {
+  padding: 20px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.item {
+  border: 2px solid #3e2a0e;
+  padding: 15px;
+  background-color: #4a3511;
+  border-radius: 8px;
+  text-align: center;
+  width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.item img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.item strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.1em;
+}
+
+.botao {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3e2a0e;
+  color: #fdf5d5;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.botao:hover {
+  background-color: #6b4c1a;
+}

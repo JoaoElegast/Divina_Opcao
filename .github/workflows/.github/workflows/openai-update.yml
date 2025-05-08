@@ -1,72 +1,67 @@
-name: Atualizar código com OpenAI
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Divina Opção</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
 
-on:
-  workflow_dispatch:  # Você roda isso manualmente
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'MedievalSharp', cursive, serif;
+      background: radial-gradient(#f8f2dc, #d1bfa3);
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #3e2b1c;
+      text-align: center;
+    }
 
-jobs:
-  atualizar_arquivo:
-    runs-on: ubuntu-latest
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+      text-shadow: 2px 2px #bfa170;
+    }
 
-    steps:
-    - name: Checar repositório
-      uses: actions/checkout@v3
-      
-    - name: Rodar Script Python
-      env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        python3 <<EOF
-        import os
-        import requests
-        import base64
-        import openai
+    p {
+      font-size: 1.2em;
+      margin-bottom: 2em;
+      font-style: italic;
+    }
 
-        openai.api_key = os.getenv("OPENAI_API_KEY")
-        repo = os.getenv("GITHUB_REPOSITORY")
-        token = os.getenv("GITHUB_TOKEN")
-        arquivo = "index.html"
-        branch = "main"
+    button {
+      padding: 0.8em 2em;
+      font-size: 1.2em;
+      background-color: #6b4f2c;
+      color: #fff;
+      border: 2px solid #422c1b;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 3px 3px #3b2a1a;
+    }
 
-        prompt = "Crie um código HTML que exiba Olá, mundo! e um botão."
+    button:hover {
+      background-color: #a9744f;
+    }
+  </style>
+</head>
+<body>
+  <h1>Divina Opção</h1>
+  <p>Em Apolisgard, cada escolha é uma semente do destino...</p>
+  <button onclick="entrarNaLoja()">Entrar na loja</button>
 
-        resposta = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=300,
-            temperature=0.5
-        )
-
-        codigo_gerado = resposta['choices'][0]['message']['content']
-
-        headers = {
-            "Authorization": f"token {token}",
-            "Accept": "application/vnd.github.v3+json"
-        }
-
-        url_get = f"https://api.github.com/repos/{repo}/contents/{arquivo}?ref={branch}"
-        resposta_get = requests.get(url_get, headers=headers)
-        if resposta_get.status_code == 200:
-            sha = resposta_get.json()['sha']
-        else:
-            print("Arquivo não encontrado, criando novo.")
-            sha = None
-
-        conteudo_base64 = base64.b64encode(codigo_gerado.encode()).decode()
-
-        data = {
-            "message": "Atualizar arquivo via GitHub Actions + OpenAI",
-            "content": conteudo_base64,
-            "branch": branch
-        }
-        if sha:
-            data["sha"] = sha
-
-        url_put = f"https://api.github.com/repos/{repo}/contents/{arquivo}"
-        resposta_put = requests.put(url_put, headers=headers, json=data)
-
-        if resposta_put.status_code in [200, 201]:
-            print("Arquivo atualizado com sucesso!")
-        else:
-            print("Erro ao atualizar arquivo:", resposta_put.text)
-        EOF
+  <script>
+    function entrarNaLoja() {
+      alert("Bem-vindo, aventureiro! A loja ainda está sendo preparada.");
+      // Aqui você pode redirecionar, por exemplo:
+      // window.location.href = "loja.html";
+    }
+  </script>
+</body>
+</html>

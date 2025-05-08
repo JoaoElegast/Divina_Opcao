@@ -1,76 +1,98 @@
-// só roda depois que o DOM estiver 100% pronto
+// Sistema de Loja e Inventário - corrigido para rodar em páginas sem container de loja
+// e sem gerar erros de elemento null
+
+// Aguarda o DOM carregar
 document.addEventListener('DOMContentLoaded', () => {
+  // Estado inicial de moedas
+  let moedas = 100;
 
-  const itensLoja = [
-    { nome: "Adaga", preco: 15, arquivo: "adaga.html" },
-    /* … demais itens … */
-  ];
-
-  // Seleções seguras: se algum id não existir, loga erro e interrompe
+  // Referências aos elementos, podem ser null se não existirem nesta página
   const moedasDisplay = document.getElementById("moedas");
-  const container = document.getElementById("itens-loja");
+  const lojaContainer = document.getElementById("itens-loja");
   const inventarioContainer = document.getElementById("inventario");
-  if (!moedasDisplay || !container || !inventarioContainer) {
-    console.error("Elemento obrigatório não encontrado:", {
-      moedasDisplay, container, inventarioContainer
-    });
-    return;
+
+  // Atualiza display de moedas
+  if (moedasDisplay) {
+    moedasDisplay.textContent = moedas;
   }
 
-  // estado inicial
-  let moedas = 100;
-  moedasDisplay.textContent = moedas;
+  // Dados da loja
+  const itensLoja = [
+    { nome: "Adaga", preco: 15, arquivo: "adaga.html" },
+    { nome: "Escudo", preco: 25, arquivo: "escudo.html" },
+    { nome: "Poção Verde", preco: 10, arquivo: "pocao_verde.html" },
+    { nome: "Elmo de Ferro", preco: 30, arquivo: "elmo_de_ferro.html" },
+    { nome: "Livro Antigo", preco: 20, arquivo: "livro_antigo.html" },
+    { nome: "Chave Antiga", preco: 12, arquivo: "chave_antiga.html" },
+    { nome: "Machado de Guerra", preco: 35, arquivo: "machado_de_guerra.html" },
+    { nome: "Mapa do Tesouro", preco: 40, arquivo: "mapa_do_tesouro.html" },
+    { nome: "Armadura Pesada", preco: 50, arquivo: "armadura_pesada.html" },
+    { nome: "Poção Azul", preco: 10, arquivo: "pocao_azul.html" }
+  ];
 
-  // renderiza os cards da loja
-  itensLoja.forEach(item => {
-    const card = document.createElement("div");
-    card.classList.add("item");
-    card.innerHTML = `
-      <h3>🧾 ${item.nome}</h3>
-      <p>Preço: <strong>${item.preco} PO</strong></p>
-      <div class="botoes">
-        <button class="ver" onclick="usarItem('${item.arquivo}')">🔍 Ver</button>
-        <button class="comprar" onclick="comprarItem('${item.nome}', ${item.preco})">🛒 Comprar</button>
-      </div>
-    `;
-    container.appendChild(card);
-  });
+  // Renderiza itens da loja somente se o container existir
+  if (lojaContainer) {
+    itensLoja.forEach(item => {
+      const card = document.createElement("div");
+      card.classList.add("item");
+      card.innerHTML = `
+        <h3>🧾 ${item.nome}</h3>
+        <p>Preço: <strong>${item.preco} PO</strong></p>
+        <div class="botoes">
+          <button class="ver">🔍 Ver</button>
+          <button class="comprar">🛒 Comprar</button>
+        </div>
+      `;
 
-  // abre o HTML do item em nova aba
+      // Botões com eventListeners em vez de onclick inline
+      const [btnVer, btnComprar] = card.querySelectorAll('button');
+      btnVer.addEventListener('click', () => usarItem(item.arquivo));
+      btnComprar.addEventListener('click', () => comprarItem(item.nome, item.preco));
+
+      lojaContainer.appendChild(card);
+    });
+  }
+
+  // Função para abrir o HTML do item
   window.usarItem = function(arquivo) {
-    window.open(`html_itens_rpg/${arquivo}`, '_blank');
+    const path = `html_itens_rpg/${arquivo}`;
+    window.open(path, '_blank');
   };
 
-  // lógica de compra
+  // Função de compra
   window.comprarItem = function(nome, preco) {
     if (moedas >= preco) {
       moedas -= preco;
-      moedasDisplay.textContent = moedas;
+      if (moedasDisplay) moedasDisplay.textContent = moedas;
+      alert(`Você comprou ${nome} por ${preco} PO!`);
       adicionarAoInventario(nome, Math.floor(preco / 2));
-      alert(`Você comprou ${nome} por ${preco} PO!`);
     } else {
       alert("Você não tem ouro suficiente!");
     }
   };
 
-  // adiciona ao inventário
+  // Adiciona item ao inventário, se container existir
   function adicionarAoInventario(nome, precoVenda) {
+    if (!inventarioContainer) return;
+
     const itemDiv = document.createElement("div");
     itemDiv.classList.add("item");
     itemDiv.innerHTML = `
       <h3>🧾 ${nome}</h3>
-      <p>Venda por: <strong>${precoVenda} PO</strong></p>
+      <p>Venda por: <strong>${precoVenda} PO</strong></p>
       <div class="botoes">
         <button class="vender">💰 Vender</button>
       </div>
     `;
-    // listener para vender
-    itemDiv.querySelector(".vender").addEventListener("click", () => {
+
+    // Evento de venda
+    itemDiv.querySelector('.vender').addEventListener('click', () => {
       moedas += precoVenda;
-      moedasDisplay.textContent = moedas;
+      if (moedasDisplay) moedasDisplay.textContent = moedas;
       itemDiv.remove();
-      alert(`Você vendeu ${nome} por ${precoVenda} PO!`);
+      alert(`Você vendeu ${nome} por ${precoVenda} PO!`);
     });
+
     inventarioContainer.appendChild(itemDiv);
   }
 

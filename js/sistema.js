@@ -1,95 +1,48 @@
-const loja = [
-  { nome: "Adaga", preco: 10, img: "adaga.png" },
-  { nome: "Azagaia", preco: 12, img: "azagaia.png" },
-  { nome: "Lança", preco: 15, img: "lanca.png" },
-  { nome: "Bordão", preco: 8, img: "bordao.png" },
-  { nome: "Armadura de Couro", preco: 50, img: "armadura_couro.png" },
-  { nome: "Armadura Acolchoada", preco: 40, img: "armadura_acolchoada.png" },
-  { nome: "Mochila", preco: 5, img: "mochila.png" },
-  { nome: "Saco de Dormir", preco: 4, img: "saco_dormir.png" },
-  { nome: "Poção de Cura", preco: 20, img: "pocao_cura.png" },
-  { nome: "Poção de Magia", preco: 25, img: "pocao_magia.png" },
+const itensLoja = [
+  { nome: "Adaga", preco: 15, arquivo: "adaga.html" },
+  { nome: "Escudo", preco: 25, arquivo: "escudo.html" },
+  { nome: "Poção Verde", preco: 10, arquivo: "pocao_verde.html" },
+  { nome: "Elmo de Ferro", preco: 30, arquivo: "elmo_de_ferro.html" },
+  { nome: "Livro Antigo", preco: 20, arquivo: "livro_antigo.html" },
+  { nome: "Chave Antiga", preco: 12, arquivo: "chave_antiga.html" },
+  { nome: "Machado de Guerra", preco: 35, arquivo: "machado_de_guerra.html" },
+  { nome: "Mapa do Tesouro", preco: 40, arquivo: "mapa_do_tesouro.html" },
+  { nome: "Armadura Pesada", preco: 50, arquivo: "armadura_pesada.html" },
+  { nome: "Poção Azul", preco: 10, arquivo: "pocao_azul.html" },
+  // ...adicione os outros itens aqui com os nomes corretos do ZIP
 ];
 
-// Inicialização segura
-let moedas = localStorage.getItem("moedas") 
-  ? parseInt(localStorage.getItem("moedas")) 
-  : 100;
+let moedas = 100;
+document.getElementById("moedas").textContent = moedas;
 
-let inventario = localStorage.getItem("inventario") 
-  ? JSON.parse(localStorage.getItem("inventario")) 
-  : [];
+const container = document.getElementById("itens-loja");
 
-function atualizarMoedas() {
-  const moedasSpan = document.getElementById("moedas");
-  if (moedasSpan) {
-    moedasSpan.innerText = moedas;
-  }
-  localStorage.setItem("moedas", moedas);
-}
+itensLoja.forEach(item => {
+  const card = document.createElement("div");
+  card.classList.add("item");
 
-function salvarInventario() {
-  localStorage.setItem("inventario", JSON.stringify(inventario));
-}
+  card.innerHTML = `
+    <h3>🧾 ${item.nome}</h3>
+    <p>Preço: <strong>${item.preco} PO</strong></p>
+    <div class="botoes">
+      <button class="ver" onclick="usarItem('${item.arquivo}')">🔍 Ver item</button>
+      <button class="comprar" onclick="comprarItem('${item.nome}', ${item.preco})">🛒 Comprar</button>
+    </div>
+  `;
 
-function carregarLoja() {
-  const lojaDiv = document.getElementById("itens-loja");
-  if (!lojaDiv) return;
-
-  lojaDiv.innerHTML = ""; // Evita duplicação
-
-  loja.forEach((item, i) => {
-    const el = document.createElement("div");
-    el.classList.add("item");
-    el.innerHTML = `
-      <img src="img/${item.img}" alt="${item.nome}" />
-      <strong>${item.nome}</strong>
-      <span>${item.preco} PO</span><br>
-      <button onclick="comprar(${i})">Comprar</button>
-    `;
-    lojaDiv.appendChild(el);
-  });
-
-  atualizarMoedas();
-}
-
-function comprar(index) {
-  const item = loja[index];
-  if (moedas >= item.preco) {
-    moedas -= item.preco;
-    inventario.push(item);
-    salvarInventario();
-    atualizarMoedas();
-    alert(`${item.nome} foi comprado!`);
-  } else {
-    alert("Você não tem PO suficiente!");
-  }
-}
-
-function carregarInventario() {
-  const invDiv = document.getElementById("inventario");
-  if (!invDiv) return;
-
-  invDiv.innerHTML = "";
-
-  if (inventario.length === 0) {
-    invDiv.innerHTML = "<p>Inventário vazio.</p>";
-    return;
-  }
-
-  inventario.forEach(item => {
-    const el = document.createElement("div");
-    el.classList.add("item");
-    el.innerHTML = `
-      <img src="img/${item.img}" alt="${item.nome}" />
-      <strong>${item.nome}</strong>
-    `;
-    invDiv.appendChild(el);
-  });
-}
-
-// Inicialização automática conforme a página
-window.addEventListener("DOMContentLoaded", () => {
-  carregarLoja();
-  carregarInventario();
+  container.appendChild(card);
 });
+
+function usarItem(arquivo) {
+  window.open(`html_itens_rpg/${arquivo}`, '_blank');
+}
+
+function comprarItem(nome, preco) {
+  if (moedas >= preco) {
+    moedas -= preco;
+    document.getElementById("moedas").textContent = moedas;
+    alert(`Você comprou ${nome} por ${preco} PO!`);
+  } else {
+    alert("Você não tem ouro suficiente!");
+  }
+}

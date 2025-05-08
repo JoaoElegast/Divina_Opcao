@@ -1,99 +1,144 @@
-// Sistema de Loja e Inventário - corrigido para rodar em páginas sem container de loja
-// e sem gerar erros de elemento null
+// Sistema de Loja e Inventário com persistência em localStorage
+// Gerencia moedas, estoque da loja e inventário entre páginas
 
-// Aguarda o DOM carregar
 document.addEventListener('DOMContentLoaded', () => {
-  // Estado inicial de moedas
-  let moedas = 100;
-
-  // Referências aos elementos, podem ser null se não existirem nesta página
-  const moedasDisplay = document.getElementById("moedas");
-  const lojaContainer = document.getElementById("itens-loja");
-  const inventarioContainer = document.getElementById("inventario");
-
-  // Atualiza display de moedas
-  if (moedasDisplay) {
-    moedasDisplay.textContent = moedas;
+  // ----- Helpers de localStorage -----
+  function loadState(key, defaultValue) {
+    try {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : defaultValue;
+    } catch (e) {
+      console.error('Erro ao ler localStorage', e);
+      return defaultValue;
+    }
   }
 
-  // Dados da loja
-  const itensLoja = [
-    { nome: "Adaga", preco: 15, arquivo: "adaga.html" },
-    { nome: "Escudo", preco: 25, arquivo: "escudo.html" },
-    { nome: "Poção Verde", preco: 10, arquivo: "pocao_verde.html" },
-    { nome: "Elmo de Ferro", preco: 30, arquivo: "elmo_de_ferro.html" },
-    { nome: "Livro Antigo", preco: 20, arquivo: "livro_antigo.html" },
-    { nome: "Chave Antiga", preco: 12, arquivo: "chave_antiga.html" },
-    { nome: "Machado de Guerra", preco: 35, arquivo: "machado_de_guerra.html" },
-    { nome: "Mapa do Tesouro", preco: 40, arquivo: "mapa_do_tesouro.html" },
-    { nome: "Armadura Pesada", preco: 50, arquivo: "armadura_pesada.html" },
-    { nome: "Poção Azul", preco: 10, arquivo: "pocao_azul.html" }
+  function saveState(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.error('Erro ao salvar localStorage', e);
+    }
+  }
+
+  // ----- Estado inicial -----
+  let moedas = loadState('moedas', 100);
+  let inventario = loadState('inventario', []);
+  let estoqueLoja = loadState('estoqueLoja', null);
+
+  // Itens fixos da loja com quantidade inicial
+  const itensLojaPadrao = [
+    { id: 'adaga', nome: 'Adaga', preco: 15, arquivo: 'adaga.html', quantidade: 5 },
+    { id: 'escudo', nome: 'Escudo', preco: 25, arquivo: 'escudo.html', quantidade: 3 },
+    { id: 'pocao_verde', nome: 'Poção Verde', preco: 10, arquivo: 'pocao_verde.html', quantidade: 10 },
+    // ... demais itens com propriedade 'quantidade'
   ];
 
-  // Renderiza itens da loja somente se o container existir
+  // Se ainda não há estoque salvo, inicializa
+  if (!estoqueLoja) {
+    estoqueLoja = itensLojaPadrao;
+    saveState('estoqueLoja', estoqueLoja);
+  }
+
+  // ----- Elementos DOM -----
+  const moedasDisplay = document.getElementById('moedas');
+  const lojaContainer = document.getElementById('itens-loja');
+  const inventarioContainer = document.getElementById('inventario');
+
+  // Atualiza display de moedas
+  if (moedasDisplay) moedasDisplay.textContent = moedas;
+
+  // ----- Renderização da Loja -----
   if (lojaContainer) {
-    itensLoja.forEach(item => {
-      const card = document.createElement("div");
-      card.classList.add("item");
+    lojaContainer.innerHTML = ''; // limpa antes
+    estoqueLoja.forEach(item => {
+      const card = document.createElement('div');
+      card.classList.add('item');
       card.innerHTML = `
         <h3>🧾 ${item.nome}</h3>
         <p>Preço: <strong>${item.preco} PO</strong></p>
+        <p>Em estoque: <strong>${item.quantidade}</strong></p>
         <div class="botoes">
           <button class="ver">🔍 Ver</button>
-          <button class="comprar">🛒 Comprar</button>
+          <button class="comprar" ${item.quantidade === 0 ? 'disabled' : ''}>🛒 Comprar</button>
         </div>
       `;
-
-      // Botões com eventListeners em vez de onclick inline
       const [btnVer, btnComprar] = card.querySelectorAll('button');
       btnVer.addEventListener('click', () => usarItem(item.arquivo));
-      btnComprar.addEventListener('click', () => comprarItem(item.nome, item.preco));
-
+      btnComprar.addEventListener('click', () => comprarItem(item.id));
       lojaContainer.appendChild(card);
     });
   }
 
-  // Função para abrir o HTML do item
-  window.usarItem = function(arquivo) {
-    const path = `html_itens_rpg/${arquivo}`;
-    window.open(path, '_blank');
-  };
-
-  // Função de compra
-  window.comprarItem = function(nome, preco) {
-    if (moedas >= preco) {
-      moedas -= preco;
-      if (moedasDisplay) moedasDisplay.textContent = moedas;
-      alert(`Você comprou ${nome} por ${preco} PO!`);
-      adicionarAoInventario(nome, Math.floor(preco / 2));
-    } else {
-      alert("Você não tem ouro suficiente!");
-    }
-  };
-
-  // Adiciona item ao inventário, se container existir
-  function adicionarAoInventario(nome, precoVenda) {
+  // ----- Renderização do Inventário -----
+  function renderInventario() {
     if (!inventarioContainer) return;
-
-    const itemDiv = document.createElement("div");
-    itemDiv.classList.add("item");
-    itemDiv.innerHTML = `
-      <h3>🧾 ${nome}</h3>
-      <p>Venda por: <strong>${precoVenda} PO</strong></p>
-      <div class="botoes">
-        <button class="vender">💰 Vender</button>
-      </div>
-    `;
-
-    // Evento de venda
-    itemDiv.querySelector('.vender').addEventListener('click', () => {
-      moedas += precoVenda;
-      if (moedasDisplay) moedasDisplay.textContent = moedas;
-      itemDiv.remove();
-      alert(`Você vendeu ${nome} por ${precoVenda} PO!`);
+    inventarioContainer.innerHTML = '';
+    inventario.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.classList.add('item');
+      div.innerHTML = `
+        <h3>🧾 ${item.nome}</h3>
+        <p>Venda por: <strong>${item.precoVenda} PO</strong></p>
+        <div class="botoes">
+          <button class="vender">💰 Vender</button>
+        </div>
+      `;
+      div.querySelector('.vender').addEventListener('click', () => venderItem(idx));
+      inventarioContainer.appendChild(div);
     });
+  }
+  renderInventario();
 
-    inventarioContainer.appendChild(itemDiv);
+  // ----- Ações -----
+  window.usarItem = function(arquivo) {
+    window.open(`html_itens_rpg/${arquivo}`, '_blank');
+  };
+
+  window.comprarItem = function(itemId) {
+    const item = estoqueLoja.find(i => i.id === itemId);
+    if (!item || item.quantidade === 0) return;
+    if (moedas < item.preco) {
+      alert('Você não tem ouro suficiente!');
+      return;
+    }
+    // Atualiza estado
+    moedas -= item.preco;
+    item.quantidade -= 1;
+    inventario.push({ nome: item.nome, precoVenda: Math.floor(item.preco/2) });
+
+    // Persiste
+    saveState('moedas', moedas);
+    saveState('estoqueLoja', estoqueLoja);
+    saveState('inventario', inventario);
+
+    // Atualiza UI
+    if (moedasDisplay) moedasDisplay.textContent = moedas;
+    if (lojaContainer) {
+      // re-renderizar loja para atualizar estoque e botões
+      estoqueLoja.forEach((it, idx) => {
+        const card = lojaContainer.children[idx];
+        const qtdP = card.querySelector('p strong');
+        qtdP.textContent = it.quantidade;
+        const btnComp = card.querySelector('.comprar');
+        btnComp.disabled = it.quantidade === 0;
+      });
+    }
+    renderInventario();
+    alert(`Você comprou ${item.nome} por ${item.preco} PO!`);
+  };
+
+  function venderItem(idx) {
+    const item = inventario[idx];
+    moedas += item.precoVenda;
+    // Remove do inventário
+    inventario.splice(idx, 1);
+    // Persiste
+    saveState('moedas', moedas);
+    saveState('inventario', inventario);
+    if (moedasDisplay) moedasDisplay.textContent = moedas;
+    renderInventario();
+    alert(`Você vendeu ${item.nome} por ${item.precoVenda} PO!`);
   }
 
 });

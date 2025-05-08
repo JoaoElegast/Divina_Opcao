@@ -1,106 +1,102 @@
-/* Estilo Medieval - Loja e Inventário */
+/* Estilo geral */
 body {
-  font-family: 'Georgia', serif;
-  background-color: #2b1d0e;
-  color: #fdf5d5;
+  font-family: 'Garamond', serif;
+  background-color: #2d2d2d; /* fundo escuro para o estilo medieval */
+  color: #e0d9b2; /* cor de texto dourado/pálido */
   margin: 0;
   padding: 0;
 }
 
-header, footer {
+header {
+  background-color: #4e3b31; /* cor marrom para o cabeçalho */
+  padding: 20px;
   text-align: center;
-  background-color: #6b4c1a;
-  padding: 20px 10px;
-  border-bottom: 3px solid #3e2a0e;
 }
 
 h1 {
-  color: #ffd700;
-  font-size: 2.5em;
-}
-
-p, h2 {
-  font-size: 1.2em;
+  font-size: 3rem;
+  color: #f4e1b2; /* dourado suave */
+  text-shadow: 2px 2px 5px #000;
 }
 
 main {
   padding: 20px;
 }
 
+/* Estilo para a seção de inventário */
 .grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
 }
 
 .item {
-  border: 2px solid #3e2a0e;
+  background-color: #6a4d37; /* fundo marrom para os itens */
+  border: 3px solid #4e3b31;
   padding: 15px;
-  background-color: #4a3511;
-  border-radius: 8px;
   text-align: center;
-  width: 200px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-.item img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 10px;
+.item-img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
-.item strong {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 1.1em;
+.item-nome {
+  font-size: 1.2rem;
+  color: #f4e1b2;
+  font-weight: bold;
 }
 
-/* Botão padrão */
+.item-preco {
+  color: #f4e1b2;
+  margin: 10px 0;
+}
+
+.vender-btn {
+  background-color: #9b6c50; /* cor de botões */
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.vender-btn:hover {
+  background-color: #7e5c3b;
+}
+
+/* Botões da página */
+footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
 .botao {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #3e2a0e;
-  color: #fdf5d5;
+  background-color: #8e7b5a;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 10px;
   text-decoration: none;
-  border-radius: 5px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  margin: 10px;
+  transition: background-color 0.3s;
 }
 
 .botao:hover {
-  background-color: #6b4c1a;
+  background-color: #7a5e42;
 }
 
-/* Botões de ação por item */
-.botoes {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+.voltar {
+  background-color: #6c4f3d;
 }
 
-.ver, .comprar {
-  font-family: 'Georgia', serif;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #fff9e6;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  transition: all 0.2s ease-in-out;
-}
-
-.ver {
-  background: #5a7346;
-}
-
-.comprar {
-  background: #8a4b4b;
-}
-
-.ver:hover, .comprar:hover {
-  transform: scale(1.05);
-  background: #a67c52;
+.voltar:hover {
+  background-color: #5a402e;
 }

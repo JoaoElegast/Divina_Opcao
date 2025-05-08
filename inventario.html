@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>🎒 Inventário do Aventureiro</title>
-  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/estilo-medieval.css">
 </head>
 <body>
   <header>
@@ -12,13 +12,65 @@
   </header>
   <main>
     <section>
-      <h2>💰 Seu Ouro: <span id="moedas"></span> PO</h2>
-      <div id="inventario" class="grid"></div>
+      <h2>💰 Seu Ouro: <span id="moedas">0</span> PO</h2>
+      <div id="inventario" class="grid">
+        <!-- Os itens do inventário serão carregados dinamicamente aqui -->
+      </div>
     </section>
     <footer>
       <a href="loja.html" class="botao">🏰 Voltar à Loja</a>
+      <a href="index.html" class="botao">🔙 Voltar ao Início</a>
     </footer>
   </main>
   <script src="js/sistema.js"></script>
+  <script>
+    // Simulação de dados
+    const jogador = { ouro: 100, inventario: [{ nome: "Espada", preco: 50, imagem: "imagens/espada.png" }] };
+
+    // Atualizar o ouro do jogador
+    const moedasSpan = document.getElementById('moedas');
+    moedasSpan.textContent = jogador.ouro;
+
+    // Renderizar inventário
+    const inventarioDiv = document.getElementById('inventario');
+    jogador.inventario.forEach((item, index) => {
+      const itemDiv = document.createElement('div');
+      itemDiv.classList.add('item');
+      itemDiv.innerHTML = `
+        <img src="${item.imagem}" alt="${item.nome}">
+        <p>${item.nome}</p>
+        <p>${item.preco} PO</p>
+        <button class="botao-vender" data-index="${index}">Vender</button>
+      `;
+      inventarioDiv.appendChild(itemDiv);
+    });
+
+    // Venda de itens
+    inventarioDiv.addEventListener('click', (event) => {
+      if (event.target.classList.contains('botao-vender')) {
+        const index = event.target.dataset.index;
+        const item = jogador.inventario[index];
+
+        // Atualizar ouro e remover do inventário
+        jogador.ouro += item.preco;
+        jogador.inventario.splice(index, 1);
+
+        // Atualizar o DOM
+        moedasSpan.textContent = jogador.ouro;
+        inventarioDiv.innerHTML = '';
+        jogador.inventario.forEach((item, index) => {
+          const itemDiv = document.createElement('div');
+          itemDiv.classList.add('item');
+          itemDiv.innerHTML = `
+            <img src="${item.imagem}" alt="${item.nome}">
+            <p>${item.nome}</p>
+            <p>${item.preco} PO</p>
+            <button class="botao-vender" data-index="${index}">Vender</button>
+          `;
+          inventarioDiv.appendChild(itemDiv);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

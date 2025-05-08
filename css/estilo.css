@@ -56,6 +56,7 @@ main {
   font-size: 1.1em;
 }
 
+/* Botão padrão */
 .botao {
   display: inline-block;
   padding: 10px 20px;
@@ -69,4 +70,37 @@ main {
 
 .botao:hover {
   background-color: #6b4c1a;
+}
+
+/* Botões de ação por item */
+.botoes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ver, .comprar {
+  font-family: 'Georgia', serif;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff9e6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.ver {
+  background: #5a7346;
+}
+
+.comprar {
+  background: #8a4b4b;
+}
+
+.ver:hover, .comprar:hover {
+  transform: scale(1.05);
+  background: #a67c52;
 }

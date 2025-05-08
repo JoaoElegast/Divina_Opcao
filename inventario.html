@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>🎒 Inventário do Aventureiro</title>
-  <link rel="stylesheet" href="css/estilo.css">
+  <meta charset="UTF-8" />
+  <title>🎒 Inventário</title>
+  <style>
+    body{background:#2d2d2d;color:#e0d9b2;font-family:Garamond,sans-serif;margin:0;padding:20px;}
+    h1{color:#f4e1b2;text-shadow:2px 2px 5px #000;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;}
+    .item{background:#6a4d37;border:3px solid #4e3b31;border-radius:10px;padding:15px;text-align:center;}
+    .item button{background:#9b6c50;color:#fff;padding:10px;border:none;border-radius:8px;cursor:pointer;}
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🎒 Inventário</h1>
-    <p>Aqui estão os itens que você comprou na loja.</p>
-  </header>
-  <main>
-    <section>
-      <h2>💰 Seu Ouro: <span id="moedas">100</span> PO</h2>
-      <div id="inventario" class="grid">
-        <!-- Itens do inventário serão adicionados dinamicamente -->
-      </div>
-    </section>
-    <footer>
-      <!-- Botão para voltar à página inicial -->
-      <a href="index.html" class="botao voltar">🏰 Voltar ao Início</a>
-      <!-- Botão para voltar à loja -->
-      <a href="loja.html" class="botao">🏰 Voltar à Loja</a>
-    </footer>
-  </main>
-  <script src="js/sistema.js"></script>
+
+  <h1>🎒 Seu Inventário</h1>
+  <p>💰 Ouro: <span id="moedas">0</span> PO</p>
+  <div id="inventario" class="grid"></div>
+  <p><a href="loja.html" style="color:#f4e1b2;">← Voltar à Loja</a></p>
+
+  <script>
+  (function(){
+    function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}}
+    function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+
+    let moedas=load('moedas',100), inv=load('inventario',[]);
+    document.getElementById('moedas').textContent=moedas;
+    const cont=document.getElementById('inventario');
+
+    function render(){
+      cont.innerHTML='';
+      inv.forEach((it,i)=>{
+        const d=document.createElement('div'); d.className='item';
+        d.innerHTML=`
+          <h3>${it.nome}</h3>
+          <p>Venda: <strong>${it.precoVenda} PO</strong></p>
+          <button data-idx="${i}">💰 Vender</button>
+        `;
+        d.querySelector('button').onclick=()=>{
+          moedas+=it.precoVenda;
+          inv.splice(i,1);
+          save('moedas',moedas); save('inventario',inv);
+          document.getElementById('moedas').textContent=moedas;
+          render();
+        };
+        cont.appendChild(d);
+      });
+    }
+    render();
+  })();
+  </script>
+
 </body>
 </html>

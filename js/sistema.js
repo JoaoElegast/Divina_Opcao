@@ -60,7 +60,7 @@ function adicionarAoInventario(nome, preco) {
     <h3>🧾 ${nome}</h3>
     <p>Preço de venda: <strong>${preco / 2} PO</strong></p>
     <div class="botoes">
-      <button class="vender" onclick="venderItem('${nome}', ${preco / 2})">💰 Vender</button>
+      <button class="vender" onclick="venderItem(event, '${nome}', ${preco / 2})">💰 Vender</button>
     </div>
   `;
 
@@ -68,11 +68,11 @@ function adicionarAoInventario(nome, preco) {
 }
 
 // Função para vender o item
-function venderItem(nome, precoVenda) {
+function venderItem(event, nome, precoVenda) {
   moedas += precoVenda;
   document.getElementById("moedas").textContent = moedas;
   
-  // Remover o item do inventário
+  // Remover o item do inventário (acessando o elemento correto)
   const item = event.target.closest('.item');
   item.remove();
 

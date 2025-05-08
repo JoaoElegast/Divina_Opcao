@@ -1,23 +1,33 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const moedasElemento = document.getElementById('moedas');
-  let moedas = parseInt(moedasElemento.textContent); // Começando com 100 PO
-
-  // Função para vender um item
-  function venderItem(preco) {
-    // Atualizar as moedas
-    moedas += preco;
-    moedasElemento.textContent = moedas;
-  }
-
-  // Selecionar todos os botões de vender e adicionar o evento de clique
-  const botoesVender = document.querySelectorAll('.vender-btn');
-  botoesVender.forEach(botao => {
-    botao.addEventListener('click', function() {
-      const preco = parseInt(botao.getAttribute('data-preco'));
-      // Remover o item do inventário
-      botao.parentElement.remove();
-      // Vender o item
-      venderItem(preco);
-    });
-  });
-});
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>🎒 Inventário do Aventureiro</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header>
+    <h1>🎒 Inventário</h1>
+    <p>Aqui estão os itens que você comprou na loja.</p>
+  </header>
+  <main>
+    <section>
+      <h2>💰 Seu Ouro: <span id="moedas">100</span> PO</h2>
+      <div id="inventario" class="grid">
+        <!-- Exemplo de item no inventário -->
+        <div class="item">
+          <img src="img/espada.png" alt="Espada" class="item-img">
+          <p class="item-nome">Espada de Ferro</p>
+          <p class="item-preco">Preço: 50 PO</p>
+          <button class="vender-btn" data-preco="50">Vender</button>
+        </div>
+        <!-- Adicione mais itens aqui -->
+      </div>
+    </section>
+    <footer>
+      <a href="loja.html" class="botao">🏰 Voltar à Loja</a>
+    </footer>
+  </main>
+  <script src="js/sistema.js"></script>
+</body>
+</html>

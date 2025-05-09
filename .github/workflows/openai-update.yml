@@ -1,7 +1,7 @@
 name: Atualizar código com OpenAI
 
 on:
-  workflow_dispatch:  # Você roda isso manualmente
+  workflow_dispatch:
 
 jobs:
   atualizar_arquivo:
@@ -11,10 +11,12 @@ jobs:
     - name: Checar repositório
       uses: actions/checkout@v3
 
-    - name: Instalar dependências
-      run: pip install openai requests
+    - name: Instalar bibliotecas necessárias
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install openai requests
 
-    - name: Rodar Script Python
+    - name: Rodar Script Python com OpenAI
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

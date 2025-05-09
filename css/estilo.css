@@ -2,6 +2,10 @@
 body {
   font-family: 'Garamond', serif;
   background-color: #2d2d2d; /* fundo escuro para o estilo medieval */
+  background-image: url('img/fundo.png'); /* aqui o caminho para sua imagem de fundo */
+  background-size: cover;       /* ajusta a imagem para cobrir toda a tela */
+  background-position: center;  /* centraliza a imagem */
+  background-repeat: no-repeat; /* evita repetição da imagem */
   color: #e0d9b2; /* cor de texto dourado/pálido */
   margin: 0;
   padding: 0;

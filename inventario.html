@@ -2,154 +2,125 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>🎒 Inventário</title>
+  <title>🎒 Inventário - Divina Opção</title>
   <style>
     body {
-      background: url('https://example.com/parchment-texture.jpg') no-repeat center center fixed;
+      background: url('imagem/bg_taverna.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #e0d9b2;
-      font-family: 'Garamond', sans-serif;
+      font-family: 'MedievalSharp', cursive;
+      color: #fdf6e3;
       margin: 0;
+      padding: 0;
+    }
+    header {
+      background: rgba(44, 27, 13, 0.9);
       padding: 20px;
-    }
-
-    h1 {
-      color: #f4e1b2;
-      text-shadow: 2px 2px 5px #000;
       text-align: center;
+      border-bottom: 3px solid #d4af37;
     }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
+    main {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      min-height: 80vh;
     }
-
     .item {
-      background: #6a4d37;
-      border: 3px solid #4e3b31;
+      background: #362c1a;
+      border: 2px solid #d4af37;
       border-radius: 10px;
       padding: 15px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      background-image: url('https://example.com/wood-texture.jpg');
-      background-size: cover;
-      background-position: center;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #000;
     }
-
-    .item h3 {
-      color: #d4af7f;
-      font-size: 18px;
+    .item h3, .item p {
+      margin: 5px 0;
     }
-
-    .item p {
-      font-size: 14px;
-    }
-
     .item button {
-      background: #9b6c50;
-      color: #fff;
-      padding: 8px;
+      background: #d4af37;
       border: none;
-      border-radius: 8px;
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
-      text-shadow: 1px 1px 3px #000;
-      margin-top: 10px;
-      margin-right: 5px;
+      margin-right: 8px;
     }
-
-    .item button:hover {
-      background: #f4e1b2;
-      color: #6a4d37;
+    .botoes {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
     }
-
-    p {
-      text-align: center;
-    }
-
-    a {
-      color: #f4e1b2;
-      font-size: 16px;
+    .botao {
+      background: #6b4226;
+      color: #fff;
+      padding: 10px 20px;
       text-decoration: none;
-    }
-
-    .back-button {
-      display: block;
-      margin-top: 20px;
-      text-align: center;
+      border: 2px solid #d4af37;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>🎒 Seu Inventário</h1>
+  </header>
 
-  <h1>🎒 Seu Inventário</h1>
-  <p>💰 Ouro: <span id="moedas">0</span> PO</p>
-  <div id="inventario" class="grid"></div>
+  <main>
+    <h2>💰 Ouro: <span id="moedas">0</span> PO</h2>
+    <div id="lista-inventario"></div>
 
-  <div class="back-button">
-    <a href="index.html">← Voltar ao Início</a>
-  </div>
+    <div class="botoes">
+      <a href="loja.html" class="botao">🛍️ Voltar à Loja</a>
+      <a href="index.html" class="botao">← Voltar ao Início</a>
+    </div>
+  </main>
 
   <script>
-    const load = (k, d) => {
-      try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; }
-    };
+    (function(){
+      function load(key, def){ try{ return JSON.parse(localStorage.getItem(key))||def }catch{return def} }
+      function save(key,val){ localStorage.setItem(key,JSON.stringify(val)); }
 
-    const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+      let moedas = load('moedas', 0);
+      let inventario = load('inventario', []);
+      const moedasDOM = document.getElementById('moedas');
+      const listaDOM = document.getElementById('lista-inventario');
+      moedasDOM.textContent = moedas;
 
-    let moedas = load('moedas', 0);
-    let inv = load('inventario', []);
+      function renderInventario() {
+        listaDOM.innerHTML = '';
 
-    document.getElementById('moedas').textContent = moedas;
-    const cont = document.getElementById('inventario');
+        if (inventario.length === 0) {
+          listaDOM.innerHTML = '<p>Nenhum item no inventário.</p>';
+          return;
+        }
 
-    function rolarDado(rolagem) {
-      const match = rolagem.match(/(\d+)d(\d+)([+-]\d+)?/);
-      if (!match) return 0;
-      const qtd = parseInt(match[1]);
-      const faces = parseInt(match[2]);
-      const bonus = parseInt(match[3] || 0);
-      let total = 0;
-      for (let i = 0; i < qtd; i++) {
-        total += Math.floor(Math.random() * faces) + 1;
+        inventario.forEach((item, index) => {
+          const el = document.createElement('div');
+          el.className = 'item';
+          el.innerHTML = `
+            <h3>${item.nome || 'Item Desconhecido'}</h3>
+            <p>Venda: ${item.precoVenda || 0} PO</p>
+            <button onclick="vender(${index})">💰 Vender</button>
+            <button onclick="usar(${index})">⚔️ Usar Item</button>
+          `;
+          listaDOM.appendChild(el);
+        });
       }
-      return total + bonus;
-    }
 
-    function render() {
-      cont.innerHTML = '';
-      inv.forEach((item, i) => {
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.innerHTML = `
-          <h3>${item.nome}</h3>
-          <p><strong>${item.descricao}</strong></p>
-          <p><em>${item.efeito}</em></p>
-          <p>Venda: <strong>${item.precoVenda} PO</strong></p>
-          <button onclick="venderItem(${i})">💰 Vender</button>
-          <button onclick="usarItem(${i})">⚔️ Usar Item</button>
-        `;
-        cont.appendChild(div);
-      });
-    }
+      window.vender = function(index){
+        const item = inventario[index];
+        if(!item) return;
+        moedas += item.precoVenda || 0;
+        inventario.splice(index, 1);
+        save('moedas', moedas);
+        save('inventario', inventario);
+        moedasDOM.textContent = moedas;
+        renderInventario();
+        alert(`Você vendeu ${item.nome} por ${item.precoVenda} PO.`);
+      }
 
-    function venderItem(i) {
-      moedas += inv[i].precoVenda;
-      inv.splice(i, 1);
-      save('moedas', moedas);
-      save('inventario', inv);
-      document.getElementById('moedas').textContent = moedas;
-      render();
-    }
-
-    function usarItem(i) {
-      const item = inv[i];
-      const resultado = rolarDado(item.rolagem);
-      alert(`🧪 ${item.nome} usado!\n${item.efeito.toUpperCase()} causado: ${resultado}`);
-    }
-
-    render();
-  </script>
-</body>
-</html>
+      window.usar = function(index){
+        const item = inventario[index];
+        if(!item) return;
+        const resultado = Math.floor(Math.random() * 20) + 1;
+        alert(`Você usou ${item.nome}! 🎲 Rolou um ${resultado} no dado!

@@ -21,7 +21,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
     }
 
@@ -42,25 +42,26 @@
       font-size: 18px;
     }
 
+    .item p {
+      font-size: 14px;
+    }
+
     .item button {
       background: #9b6c50;
       color: #fff;
-      padding: 10px;
+      padding: 8px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
       text-shadow: 1px 1px 3px #000;
       margin-top: 10px;
+      margin-right: 5px;
     }
 
     .item button:hover {
       background: #f4e1b2;
       color: #6a4d37;
-    }
-
-    .item button:active {
-      background: #7a5a3e;
     }
 
     p {
@@ -71,10 +72,6 @@
       color: #f4e1b2;
       font-size: 16px;
       text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
     }
 
     .back-button {
@@ -95,46 +92,64 @@
   </div>
 
   <script>
-    (function() {
-      function load(k, d) {
-        try {
-          return JSON.parse(localStorage.getItem(k)) || d
-        } catch {
-          return d
-        }
-      }
-      
-      function save(k, v) {
-        localStorage.setItem(k, JSON.stringify(v))
-      }
+    const load = (k, d) => {
+      try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; }
+    };
 
-      let moedas = load('moedas', 100),
-          inv = load('inventario', []);
+    const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 
+    let moedas = load('moedas', 0);
+    let inv = load('inventario', []);
+
+    document.getElementById('moedas').textContent = moedas;
+    const cont = document.getElementById('inventario');
+
+    function rolarDado(rolagem) {
+      const match = rolagem.match(/(\d+)d(\d+)([+-]\d+)?/);
+      if (!match) return 0;
+      const qtd = parseInt(match[1]);
+      const faces = parseInt(match[2]);
+      const bonus = parseInt(match[3] || 0);
+      let total = 0;
+      for (let i = 0; i < qtd; i++) {
+        total += Math.floor(Math.random() * faces) + 1;
+      }
+      return total + bonus;
+    }
+
+    function render() {
+      cont.innerHTML = '';
+      inv.forEach((item, i) => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <h3>${item.nome}</h3>
+          <p><strong>${item.descricao}</strong></p>
+          <p><em>${item.efeito}</em></p>
+          <p>Venda: <strong>${item.precoVenda} PO</strong></p>
+          <button onclick="venderItem(${i})">💰 Vender</button>
+          <button onclick="usarItem(${i})">⚔️ Usar Item</button>
+        `;
+        cont.appendChild(div);
+      });
+    }
+
+    function venderItem(i) {
+      moedas += inv[i].precoVenda;
+      inv.splice(i, 1);
+      save('moedas', moedas);
+      save('inventario', inv);
       document.getElementById('moedas').textContent = moedas;
-      const cont = document.getElementById('inventario');
+      render();
+    }
 
-      function render() {
-        cont.innerHTML = '';
-        inv.forEach((it, i) => {
-          const d = document.createElement('div');
-          d.className = 'item';
-          d.innerHTML = `
-            <h3>${it.nome}</h3>
-            <p>Venda: <strong>${it.precoVenda} PO</strong></p>
-            <button data-idx="${i}">💰 Vender</button>
-            <button data-idx="${i}" class="usar">⚔️ Usar Item</button>
-          `;
-          
-          d.querySelectorAll('button').forEach(button => {
-            if (button.textContent === '💰 Vender') {
-              button.onclick = () => {
-                moedas += it.precoVenda;
-                inv.splice(i, 1);
-                save('moedas', moedas);
-                save('inventario', inv);
-                document.getElementById('moedas').textContent = moedas;
-                render();
-              };
-            } else {
-              button.onclick = () =>
+    function usarItem(i) {
+      const item = inv[i];
+      const resultado = rolarDado(item.rolagem);
+      alert(`🧪 ${item.nome} usado!\n${item.efeito.toUpperCase()} causado: ${resultado}`);
+    }
+
+    render();
+  </script>
+</body>
+</html>

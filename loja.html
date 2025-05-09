@@ -5,7 +5,6 @@
   <title>🏰 Loja - Divina Opção</title>
 
   <style>
-    /* ========== CSS da loja ========== */
     body {
       background: url('imagem/bg_taverna.jpg') no-repeat center center fixed;
       background-size: cover;
@@ -22,7 +21,11 @@
     .item p, .item h3 { margin:5px 0; }
     .item button { background:#d4af37; border:none; color:#000; padding:8px 12px; border-radius:6px; cursor:pointer; }
     .item button:disabled { opacity:.5; cursor:not-allowed; }
-    .botao { display:block; width:fit-content; margin:30px auto; background:#6b4226; color:#fff; padding:10px 20px; text-decoration:none; border:2px solid #d4af37; border-radius:8px; }
+    .botao {
+      display:block; width:fit-content; margin:10px auto;
+      background:#6b4226; color:#fff; padding:10px 20px;
+      text-decoration:none; border:2px solid #d4af37; border-radius:8px;
+    }
   </style>
 </head>
 <body>
@@ -36,62 +39,4 @@
     <h2>💰 Seu Ouro: <span id="moedas">0</span> PO</h2>
     <div id="itens-loja" class="grid"></div>
     <a href="inventario.html" class="botao">📦 Ir para Inventário</a>
-  </main>
-
-  <script>
-  (function(){
-    // --- persistência helpers ---
-    function load(key, def){ try{ return JSON.parse(localStorage.getItem(key))||def }catch{return def} }
-    function save(key,val){ localStorage.setItem(key,JSON.stringify(val)); }
-
-    // --- estado ---
-    let moedas = load('moedas',100);
-    let inventario = load('inventario',[]);
-    let estoque = load('estoque',[
-      { id:'adaga', nome:'Adaga', preco:15, arquivo:'adaga.html', qt:5 },
-      { id:'escudo', nome:'Escudo', preco:25, arquivo:'escudo.html', qt:3 },
-      { id:'pocao_verde', nome:'Poção Verde', preco:10, arquivo:'pocao_verde.html', qt:10 }
-      // … coloque aqui os demais itens …
-    ]);
-
-    // --- refs DOM ---
-    const mon = document.getElementById('moedas');
-    const loja = document.getElementById('itens-loja');
-    mon.textContent = moedas;
-
-    // --- render loja ---
-    function renderLoja(){
-      loja.innerHTML = '';
-      estoque.forEach(item=>{
-        const d=document.createElement('div'); d.className='item';
-        d.innerHTML=`
-          <h3>${item.nome}</h3>
-          <p>Preço: <strong>${item.preco} PO</strong></p>
-          <p>Em estoque: <strong>${item.qt}</strong></p>
-          <button ${item.qt===0?'disabled':''} data-id="${item.id}">🛒 Comprar</button>
-        `;
-        d.querySelector('button').onclick=()=>comprar(item.id);
-        loja.appendChild(d);
-      });
-    }
-
-    // --- compra ---
-    function comprar(id){
-      const it=estoque.find(x=>x.id===id);
-      if(!it||it.qt===0||moedas<it.preco)return alert('Não é possível comprar.');
-      moedas-=it.preco; it.qt--;
-      inventario.push({ nome:it.nome, precoVenda:Math.floor(it.preco/2) });
-      save('moedas',moedas);
-      save('estoque',estoque);
-      save('inventario',inventario);
-      mon.textContent=moedas;
-      renderLoja();
-      alert(`Você comprou ${it.nome} por ${it.preco} PO!`);
-    }
-
-    renderLoja();
-  })();
-  </script>
-
-</body>
-</html>
+    <a href="index

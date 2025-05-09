@@ -2,18 +2,91 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Divina Opção</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://i.imgur.com/QSyN9vo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Georgia', serif;
+            color: #f5deb3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .login-box {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 30px;
+            border: 2px solid #daa520;
+            border-radius: 15px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 10px #000;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #daa520;
+            background: #2d1b00;
+            color: #fff8dc;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #daa520;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #ffcc00;
+        }
+        .error {
+            color: #ff4d4d;
+            margin-top: 10px;
+        }
+    </style>
 </head>
-<body style="background-color:#1b1b1b; color:white; font-family:Georgia, serif; text-align:center; padding:50px;">
-    <h1>Login do Jogador</h1>
-    <form action="personagem.html" method="get">
-        <label>Nome de Usuário:<br>
-            <input type="text" name="usuario" required>
-        </label><br><br>
-        <label>Senha:<br>
-            <input type="password" name="senha" required>
-        </label><br><br>
-        <button type="submit">Entrar</button>
-    </form>
+<body>
+    <div class="login-box">
+        <h1>Login do Aventureiro</h1>
+        <form id="login-form">
+            <input type="text" id="usuario" placeholder="Nome de Usuário" required><br>
+            <input type="password" id="senha" placeholder="Senha" required><br>
+            <button type="submit">Entrar</button>
+            <div class="error" id="erro"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const usuario = document.getElementById("usuario").value.trim();
+            const senha = document.getElementById("senha").value;
+
+            if (usuario === "" || senha === "") {
+                document.getElementById("erro").textContent = "Preencha todos os campos!";
+                return;
+            }
+
+            // Simulação de login bem-sucedido
+            // Futuramente pode ser localStorage, banco, API...
+            sessionStorage.setItem("usuario", usuario);
+
+            window.location.href = "personagem.html"; // redireciona para a ficha
+        });
+    </script>
 </body>
 </html>

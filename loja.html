@@ -42,11 +42,9 @@
 
   <script>
   (function(){
-    // --- persistência helpers ---
     function load(key, def){ try{ return JSON.parse(localStorage.getItem(key))||def }catch{return def} }
     function save(key,val){ localStorage.setItem(key,JSON.stringify(val)); }
 
-    // --- estado ---
     let moedas = load('moedas', 18);
     let inventario = load('inventario', []);
     let estoque = load('estoque', [
@@ -67,12 +65,10 @@
       { id:'bag_of_holding', nome:'Saco de Armazenamento', preco:120, descricao:'Aumenta capacidade de carga', qt:1 }
     ]);
 
-    // --- refs DOM ---
     const mon = document.getElementById('moedas');
     const loja = document.getElementById('itens-loja');
     mon.textContent = moedas;
 
-    // --- render loja ---
     function renderLoja(){
       loja.innerHTML = '';
       estoque.forEach(item=>{
@@ -89,7 +85,6 @@
       });
     }
 
-    // --- compra ---
     function comprar(id){
       const it=estoque.find(x=>x.id===id);
       if(!it||it.qt===0||moedas<it.preco)return alert('Não é possível comprar.');

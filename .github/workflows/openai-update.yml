@@ -25,9 +25,10 @@ jobs:
         import os
         import requests
         import base64
-        import openai
+        from openai import OpenAI
 
-        openai.api_key = os.getenv("OPENAI_API_KEY")
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
         repo = os.getenv("GITHUB_REPOSITORY")
         token = os.getenv("GITHUB_TOKEN")
         arquivo = "index.html"
@@ -35,14 +36,14 @@ jobs:
 
         prompt = "Crie um código HTML que exiba Olá, mundo! e um botão."
 
-        resposta = openai.ChatCompletion.create(
+        resposta = client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=300,
             temperature=0.5
         )
 
-        codigo_gerado = resposta['choices'][0]['message']['content']
+        codigo_gerado = resposta.choices[0].message.content
 
         headers = {
             "Authorization": f"token {token}",

@@ -1,144 +1,33 @@
-// Sistema de Loja e Inventário com persistência em localStorage
-// Gerencia moedas, estoque da loja e inventário entre páginas
+// Lista de itens padrão da loja (exemplo com categorias)
+const itensLojaPadrao = [
+  // Armas Simples
+  { id: 'espada_longa', nome: 'Espada Longa', preco: 50, arquivo: 'espada_longa.html', quantidade: 5 },
+  { id: 'machado_guerra', nome: 'Machado de Guerra', preco: 60, arquivo: 'machado_guerra.html', quantidade: 3 },
+  { id: 'arco_curto', nome: 'Arco Curto', preco: 40, arquivo: 'arco_curto.html', quantidade: 4 },
 
-document.addEventListener('DOMContentLoaded', () => {
-  // ----- Helpers de localStorage -----
-  function loadState(key, defaultValue) {
-    try {
-      const stored = localStorage.getItem(key);
-      return stored ? JSON.parse(stored) : defaultValue;
-    } catch (e) {
-      console.error('Erro ao ler localStorage', e);
-      return defaultValue;
-    }
-  }
+  // Armaduras Leves
+  { id: 'armadura_couro', nome: 'Armadura de Couro', preco: 30, arquivo: 'armadura_couro.html', quantidade: 4 },
+  { id: 'armadura_oculta', nome: 'Armadura Oculta', preco: 55, arquivo: 'armadura_oculta.html', quantidade: 2 },
 
-  function saveState(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (e) {
-      console.error('Erro ao salvar localStorage', e);
-    }
-  }
+  // Equipamentos de Aventura
+  { id: 'corda_15m', nome: 'Corda de 15m', preco: 5, arquivo: 'corda_15m.html', quantidade: 10 },
+  { id: 'tocha', nome: 'Tocha', preco: 1, arquivo: 'tocha.html', quantidade: 20 },
+  { id: 'kit_explorador', nome: 'Kit do Explorador', preco: 25, arquivo: 'kit_explorador.html', quantidade: 5 },
 
-  // ----- Estado inicial -----
-  let moedas = loadState('moedas', 100);
-  let inventario = loadState('inventario', []);
-  let estoqueLoja = loadState('estoqueLoja', null);
+  // Itens Consumíveis
+  { id: 'pocao_cura', nome: 'Poção de Cura', preco: 20, arquivo: 'pocao_cura.html', quantidade: 10 },
+  { id: 'pocao_forca', nome: 'Poção de Força', preco: 30, arquivo: 'pocao_forca.html', quantidade: 5 },
+  { id: 'pocao_velocidade', nome: 'Poção de Velocidade', preco: 35, arquivo: 'pocao_velocidade.html', quantidade: 3 },
 
-  // Itens fixos da loja com quantidade inicial
-  const itensLojaPadrao = [
-    { id: 'adaga', nome: 'Adaga', preco: 15, arquivo: 'adaga.html', quantidade: 5 },
-    { id: 'escudo', nome: 'Escudo', preco: 25, arquivo: 'escudo.html', quantidade: 3 },
-    { id: 'pocao_verde', nome: 'Poção Verde', preco: 10, arquivo: 'pocao_verde.html', quantidade: 10 },
-    // ... demais itens com propriedade 'quantidade'
-  ];
+  // Itens Mágicos (Raros)
+  { id: 'anel_protecao', nome: 'Anel de Proteção', preco: 80, arquivo: 'anel_protecao.html', quantidade: 1 },
+  { id: 'cajado_arcano', nome: 'Cajado Arcano', preco: 100, arquivo: 'cajado_arcano.html', quantidade: 1 },
+  { id: 'botas_levitacao', nome: 'Botas de Levitação', preco: 120, arquivo: 'botas_levitacao.html', quantidade: 1 }
+];
 
-  // Se ainda não há estoque salvo, inicializa
-  if (!estoqueLoja) {
-    estoqueLoja = itensLojaPadrao;
-    saveState('estoqueLoja', estoqueLoja);
-  }
-
-  // ----- Elementos DOM -----
-  const moedasDisplay = document.getElementById('moedas');
-  const lojaContainer = document.getElementById('itens-loja');
-  const inventarioContainer = document.getElementById('inventario');
-
-  // Atualiza display de moedas
-  if (moedasDisplay) moedasDisplay.textContent = moedas;
-
-  // ----- Renderização da Loja -----
-  if (lojaContainer) {
-    lojaContainer.innerHTML = ''; // limpa antes
-    estoqueLoja.forEach(item => {
-      const card = document.createElement('div');
-      card.classList.add('item');
-      card.innerHTML = `
-        <h3>🧾 ${item.nome}</h3>
-        <p>Preço: <strong>${item.preco} PO</strong></p>
-        <p>Em estoque: <strong>${item.quantidade}</strong></p>
-        <div class="botoes">
-          <button class="ver">🔍 Ver</button>
-          <button class="comprar" ${item.quantidade === 0 ? 'disabled' : ''}>🛒 Comprar</button>
-        </div>
-      `;
-      const [btnVer, btnComprar] = card.querySelectorAll('button');
-      btnVer.addEventListener('click', () => usarItem(item.arquivo));
-      btnComprar.addEventListener('click', () => comprarItem(item.id));
-      lojaContainer.appendChild(card);
-    });
-  }
-
-  // ----- Renderização do Inventário -----
-  function renderInventario() {
-    if (!inventarioContainer) return;
-    inventarioContainer.innerHTML = '';
-    inventario.forEach((item, idx) => {
-      const div = document.createElement('div');
-      div.classList.add('item');
-      div.innerHTML = `
-        <h3>🧾 ${item.nome}</h3>
-        <p>Venda por: <strong>${item.precoVenda} PO</strong></p>
-        <div class="botoes">
-          <button class="vender">💰 Vender</button>
-        </div>
-      `;
-      div.querySelector('.vender').addEventListener('click', () => venderItem(idx));
-      inventarioContainer.appendChild(div);
-    });
-  }
-  renderInventario();
-
-  // ----- Ações -----
-  window.usarItem = function(arquivo) {
-    window.open(`html_itens_rpg/${arquivo}`, '_blank');
-  };
-
-  window.comprarItem = function(itemId) {
-    const item = estoqueLoja.find(i => i.id === itemId);
-    if (!item || item.quantidade === 0) return;
-    if (moedas < item.preco) {
-      alert('Você não tem ouro suficiente!');
-      return;
-    }
-    // Atualiza estado
-    moedas -= item.preco;
-    item.quantidade -= 1;
-    inventario.push({ nome: item.nome, precoVenda: Math.floor(item.preco/2) });
-
-    // Persiste
-    saveState('moedas', moedas);
-    saveState('estoqueLoja', estoqueLoja);
-    saveState('inventario', inventario);
-
-    // Atualiza UI
-    if (moedasDisplay) moedasDisplay.textContent = moedas;
-    if (lojaContainer) {
-      // re-renderizar loja para atualizar estoque e botões
-      estoqueLoja.forEach((it, idx) => {
-        const card = lojaContainer.children[idx];
-        const qtdP = card.querySelector('p strong');
-        qtdP.textContent = it.quantidade;
-        const btnComp = card.querySelector('.comprar');
-        btnComp.disabled = it.quantidade === 0;
-      });
-    }
-    renderInventario();
-    alert(`Você comprou ${item.nome} por ${item.preco} PO!`);
-  };
-
-  function venderItem(idx) {
-    const item = inventario[idx];
-    moedas += item.precoVenda;
-    // Remove do inventário
-    inventario.splice(idx, 1);
-    // Persiste
-    saveState('moedas', moedas);
-    saveState('inventario', inventario);
-    if (moedasDisplay) moedasDisplay.textContent = moedas;
-    renderInventario();
-    alert(`Você vendeu ${item.nome} por ${item.precoVenda} PO!`);
-  }
-
-});
+// Inicialização segura do estoque
+let estoqueLoja = loadState('estoqueLoja', null);
+if (!estoqueLoja) {
+  estoqueLoja = itensLojaPadrao;
+  saveState('estoqueLoja', estoqueLoja);
+}

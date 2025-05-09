@@ -8,7 +8,7 @@
       background: url('https://example.com/parchment-texture.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #e0d9b2;
-      font-family: Garamond, sans-serif;
+      font-family: 'Garamond', sans-serif;
       margin: 0;
       padding: 20px;
     }
@@ -137,20 +137,4 @@
                 render();
               };
             } else {
-              button.onclick = () => {
-                const dado = Math.floor(Math.random() * 20) + 1;  // Lançamento de dado (1 a 20)
-                alert(`Você usou o item: ${it.nome}. Resultado do dado: ${dado}`);
-              };
-            }
-          });
-
-          cont.appendChild(d);
-        });
-      }
-
-      render();
-    })();
-  </script>
-
-</body>
-</html>
+              button.onclick = () =>

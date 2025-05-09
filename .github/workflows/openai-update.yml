@@ -1,7 +1,7 @@
 name: Atualizar código com OpenAI
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Você roda isso manualmente
 
 jobs:
   atualizar_arquivo:
@@ -11,10 +11,13 @@ jobs:
     - name: Checar repositório
       uses: actions/checkout@v3
 
-    - name: Rodar Script Python com OpenAI
+    - name: Instalar dependências
+      run: pip install openai requests
+
+    - name: Rodar Script Python
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python3 <<EOF
         import os
@@ -24,17 +27,17 @@ jobs:
 
         openai.api_key = os.getenv("OPENAI_API_KEY")
         repo = os.getenv("GITHUB_REPOSITORY")
-        token = os.getenv("TOKEN_GITHUB")
+        token = os.getenv("GITHUB_TOKEN")
         arquivo = "index.html"
         branch = "main"
 
-        prompt = "Crie um código HTML com estilo medieval para uma loja fictícia chamada Divina Opção com botão Entrar."
+        prompt = "Crie um código HTML que exiba Olá, mundo! e um botão."
 
         resposta = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=1000,
-            temperature=0.6
+            max_tokens=300,
+            temperature=0.5
         )
 
         codigo_gerado = resposta['choices'][0]['message']['content']
@@ -46,12 +49,16 @@ jobs:
 
         url_get = f"https://api.github.com/repos/{repo}/contents/{arquivo}?ref={branch}"
         resposta_get = requests.get(url_get, headers=headers)
-        sha = resposta_get.json().get('sha') if resposta_get.status_code == 200 else None
+        if resposta_get.status_code == 200:
+            sha = resposta_get.json()['sha']
+        else:
+            print("Arquivo não encontrado, criando novo.")
+            sha = None
 
         conteudo_base64 = base64.b64encode(codigo_gerado.encode()).decode()
 
         data = {
-            "message": "Atualizar index.html com código gerado pelo ChatGPT",
+            "message": "Atualizar arquivo via GitHub Actions + OpenAI",
             "content": conteudo_base64,
             "branch": branch
         }
@@ -62,7 +69,7 @@ jobs:
         resposta_put = requests.put(url_put, headers=headers, json=data)
 
         if resposta_put.status_code in [200, 201]:
-            print("✔️ Arquivo atualizado com sucesso!")
+            print("Arquivo atualizado com sucesso!")
         else:
-            print("❌ Erro ao atualizar:", resposta_put.text)
+            print("Erro ao atualizar arquivo:", resposta_put.text)
         EOF

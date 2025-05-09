@@ -2,15 +2,19 @@
 body {
   font-family: 'Garamond', serif;
   background-color: #2d2d2d; /* fundo escuro para o estilo medieval */
-  background-image: url('img/fundo.png'); /* aqui o caminho para sua imagem de fundo */
+  background-image: url('imagem/fundo.png'); /* aqui o caminho correto para sua imagem de fundo */
   background-size: cover;       /* ajusta a imagem para cobrir toda a tela */
   background-position: center;  /* centraliza a imagem */
   background-repeat: no-repeat; /* evita repetição da imagem */
   color: #e0d9b2; /* cor de texto dourado/pálido */
   margin: 0;
   padding: 0;
+  height: 100vh; /* Garante que o corpo da página ocupe toda a altura da tela */
+  display: flex;
+  flex-direction: column; /* Garante que o conteúdo seja disposto de forma flexível */
 }
 
+/* Cabeçalho */
 header {
   background-color: #4e3b31; /* cor marrom para o cabeçalho */
   padding: 20px;
@@ -23,8 +27,10 @@ h1 {
   text-shadow: 2px 2px 5px #000;
 }
 
+/* Seção principal */
 main {
   padding: 20px;
+  flex-grow: 1; /* Faz o conteúdo se expandir para preencher o espaço restante */
 }
 
 /* Estilo para a seção de inventário */

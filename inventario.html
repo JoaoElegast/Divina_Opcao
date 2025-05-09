@@ -51,6 +51,7 @@
       cursor: pointer;
       font-weight: bold;
       text-shadow: 1px 1px 3px #000;
+      margin-top: 10px;
     }
 
     .item button:hover {
@@ -61,14 +62,37 @@
     .item button:active {
       background: #7a5a3e;
     }
+
+    p {
+      text-align: center;
+    }
+
+    a {
+      color: #f4e1b2;
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back-button {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
   <h1>🎒 Seu Inventário</h1>
-  <p style="text-align: center;">💰 Ouro: <span id="moedas">0</span> PO</p>
+  <p>💰 Ouro: <span id="moedas">0</span> PO</p>
   <div id="inventario" class="grid"></div>
-  <p style="text-align: center;"><a href="loja.html" style="color:#f4e1b2;">← Voltar à Loja</a></p>
+
+  <div class="back-button">
+    <a href="index.html">← Voltar ao Início</a>
+  </div>
 
   <script>
     (function() {

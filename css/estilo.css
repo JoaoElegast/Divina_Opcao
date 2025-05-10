@@ -1,117 +1,71 @@
-background-image: url('imagem/fundo.png');
-    background-size: cover; /* Faz a imagem cobrir toda a área da tela */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    height: 100vh; /* Garante que o fundo ocupe toda a altura da tela */
-    margin: 0; /* Remove qualquer margem do corpo da página *//* Estilo geral */
 body {
-  font-family: 'Garamond', serif;
-  background-color: #2d2d2d; /* fundo escuro para o estilo medieval */
-  background-image: url('imagem/fundo.png'); /* aqui o caminho correto para sua imagem de fundo */
-  background-size: cover;       /* ajusta a imagem para cobrir toda a tela */
-  background-position: center;  /* centraliza a imagem */
-  background-repeat: no-repeat; /* evita repetição da imagem */
-  color: #e0d9b2; /* cor de texto dourado/pálido */
-  margin: 0;
-  padding: 0;
-  height: 100vh; /* Garante que o corpo da página ocupe toda a altura da tela */
-  display: flex;
-  flex-direction: column; /* Garante que o conteúdo seja disposto de forma flexível */
+    font-family: 'Georgia', serif;
+    background-image: url('imagem/fundo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #f0eada;
+    text-align: center;
+    padding: 60px;
+    margin: 0;
+    overflow-x: hidden;
 }
 
-/* Cabeçalho */
-header {
-  background-color: #4e3b31; /* cor marrom para o cabeçalho */
-  padding: 20px;
-  text-align: center;
-}
-
+/* Título principal */
 h1 {
-  font-size: 3rem;
-  color: #f4e1b2; /* dourado suave */
-  text-shadow: 2px 2px 5px #000;
+    font-size: 3em;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: inline-block;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid #8b4513;
+    text-shadow: 2px 2px 4px #000;
+    margin-bottom: 10px;
 }
 
-/* Seção principal */
-main {
-  padding: 20px;
-  flex-grow: 1; /* Faz o conteúdo se expandir para preencher o espaço restante */
+/* Parágrafo de boas-vindas */
+p {
+    font-size: 1.5em;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 0;
 }
 
-/* Estilo para a seção de inventário */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+/* Links como botões */
+a {
+    display: block;
+    margin: 15px auto;
+    font-size: 1.5em;
+    color: #ffdd57;
+    text-decoration: none;
+    background-color: rgba(139, 69, 19, 0.8);
+    padding: 15px 30px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid #daa520;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    width: 250px;
 }
 
-.item {
-  background-color: #6a4d37; /* fundo marrom para os itens */
-  border: 3px solid #4e3b31;
-  padding: 15px;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+a:hover {
+    background-color: #daa520;
+    color: #fff;
+    transform: scale(1.1);
+    text-shadow: 2px 2px 4px #000;
 }
 
-.item-img {
-  width: 100%;
-  height: 150px;
-  object-fit: contain;
-  border-radius: 8px;
+a:active {
+    transform: scale(1.05);
+    box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
 }
 
-.item-nome {
-  font-size: 1.2rem;
-  color: #f4e1b2;
-  font-weight: bold;
-}
-
-.item-preco {
-  color: #f4e1b2;
-  margin: 10px 0;
-}
-
-.vender-btn {
-  background-color: #9b6c50; /* cor de botões */
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.vender-btn:hover {
-  background-color: #7e5c3b;
-}
-
-/* Botões da página */
+/* Rodapé */
 footer {
-  margin-top: 30px;
-  text-align: center;
-}
-
-.botao {
-  display: inline-block;
-  background-color: #8e7b5a;
-  color: #fff;
-  padding: 15px 30px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 10px;
-  transition: background-color 0.3s;
-}
-
-.botao:hover {
-  background-color: #7a5e42;
-}
-
-.voltar {
-  background-color: #6c4f3d;
-}
-
-.voltar:hover {
-  background-color: #5a402e;
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #ccc;
+    text-shadow: 1px 1px 2px #000;
 }

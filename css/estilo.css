@@ -1,6 +1,6 @@
 body {
     font-family: 'Georgia', serif;
-    background-image: url('imagem/fundo.png');
+background: url('../img/fundo.png') no-repeat center center fixed;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

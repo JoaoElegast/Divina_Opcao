@@ -1,12 +1,12 @@
-body {
-    font-family: 'Georgia', serif;
-    background: url(assets/fundo.png) no-repeat center center fixed;
-    background-size: cover;
-    color: #f0eada;
-    text-align: center;
-    padding: 60px;
-    margin: 0;
-    overflow-x: hidden;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url('assets/fundo.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 h1 {

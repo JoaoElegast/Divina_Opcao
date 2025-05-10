@@ -2,7 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-image: url('/ativos/fundo.png');
+  background-image: url('../assets/fundo.png'); /* Caminho corrigido */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -22,11 +22,11 @@ h1 {
 
 .slogan {
     font-size: 1.5em;
-    background-color: rgba(0, 0, 0, 0.7); /* Ajuste de fundo */
-    display: block; /* Faz com que fique abaixo do título */
+    background-color: rgba(0, 0, 0, 0.7);
+    display: block;
     padding: 15px;
     border-radius: 10px;
-    margin-top: 20px; /* Espaço entre o título e a frase */
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 

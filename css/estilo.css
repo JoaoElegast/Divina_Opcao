@@ -1,4 +1,9 @@
-/* Estilo geral */
+background-image: url('img/fundo.png');
+    background-size: cover; /* Faz a imagem cobrir toda a área da tela */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    height: 100vh; /* Garante que o fundo ocupe toda a altura da tela */
+    margin: 0; /* Remove qualquer margem do corpo da página *//* Estilo geral */
 body {
   font-family: 'Garamond', serif;
   background-color: #2d2d2d; /* fundo escuro para o estilo medieval */

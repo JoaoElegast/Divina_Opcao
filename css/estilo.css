@@ -1,6 +1,6 @@
 body {
     font-family: 'Georgia', serif;
-    background: url(fundo.png) no-repeat center center fixed;
+    background: url(assets/fundo.png) no-repeat center center fixed;
     background-size: cover;
     color: #f0eada;
     text-align: center;

@@ -1,98 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bem-vindo à taverna da Divina Opção. Onde cada escolha é uma semente do destino.">
-    <title>Divina Opção - Taverna</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-image: url('/Divina_Opcao/assets/fundo.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: 'Georgia', serif;
-            color: #fff;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bem-vindo à taverna da Divina Opção. Onde cada escolha é uma semente do destino.">
+  <title>Divina Opção - Taverna</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-image: url('assets/fundo.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: 'Georgia', serif;
+      color: #f0e6d2;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-        h1 {
-            font-size: 3em;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: inline-block;
-            padding: 20px;
-            border-radius: 15px;
-            border: 3px solid #8b4513;
-            text-shadow: 2px 2px 4px #000;
-            margin-bottom: 10px;
-        }
+    h1 {
+      font-size: 3em;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px 40px;
+      border-radius: 15px;
+      border: 3px solid #8b4513;
+      text-shadow: 2px 2px 4px #000;
+      margin-bottom: 10px;
+    }
 
-        .slogan {
-            font-size: 1.5em;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: block;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
+    .slogan {
+      font-size: 1.3em;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 15px 25px;
+      border-radius: 10px;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      max-width: 80%;
+    }
 
-        a {
-            display: block;
-            margin: 15px auto;
-            font-size: 1.5em;
-            color: #ffdd57;
-            text-decoration: none;
-            background-color: rgba(139, 69, 19, 0.8);
-            padding: 15px 30px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            border: 2px solid #daa520;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-            width: 250px;
-        }
+    a {
+      display: block;
+      margin: 10px auto;
+      font-size: 1.4em;
+      color: #ffdd57;
+      text-decoration: none;
+      background-color: rgba(139, 69, 19, 0.85);
+      padding: 15px 30px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 2px solid #daa520;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+      width: 250px;
+    }
 
-        a:hover {
-            background-color: #daa520;
-            color: #fff;
-            transform: scale(1.1);
-            text-shadow: 2px 2px 4px #000;
-        }
+    a:hover {
+      background-color: #daa520;
+      color: #fff;
+      transform: scale(1.05);
+      text-shadow: 2px 2px 4px #000;
+    }
 
-        a:active {
-            transform: scale(1.05);
-            box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
-        }
+    a:active {
+      transform: scale(0.98);
+      box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+    }
 
-        footer {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #ccc;
-            text-shadow: 1px 1px 2px #000;
-        }
-    </style>
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.9em;
+      color: #ccc;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+        padding: 15px;
+      }
+      .slogan {
+        font-size: 1em;
+      }
+      a {
+        width: 80%;
+        font-size: 1.2em;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div>
     <h1>Bem-vindo à Taverna da Divina Opção</h1>
     <p class="slogan">Onde cada escolha é uma semente do destino... 🌿</p>
     <a href="login.html" onclick="playSound()">Login</a>
     <a href="loja.html" onclick="playSound()">Entrar na Loja</a>
     <a href="inventario.html" onclick="playSound()">Inventário</a>
     <a href="personagem.html" onclick="playSound()">Ficha do Personagem</a>
-    <footer>
-        <p>Divina Opção © 2025</p>
-    </footer>
-    <audio id="button-sound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
-    <script>
-        function playSound() {
-            const sound = document.getElementById('button-sound');
-            sound.currentTime = 0;
-            sound.play();
-        }
-    </script>
+  </div>
+  <footer>
+    <p>Divina Opção © 2025</p>
+  </footer>
+
+  <audio id="button-sound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+  <script>
+    function playSound() {
+      const sound = document.getElementById('button-sound');
+      sound.currentTime = 0;
+      sound.play();
+    }
+  </script>
 </body>
 </html>

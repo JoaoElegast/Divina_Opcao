@@ -3,90 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Divina Opção</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: url('https://i.imgur.com/QSyN9vo.jpg') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Georgia', serif;
-            color: #f5deb3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .login-box {
-            background-color: rgba(0, 0, 0, 0.85);
-            padding: 30px;
-            border: 2px solid #daa520;
-            border-radius: 15px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 0 10px #000;
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        input {
-            width: 90%;
-            padding: 8px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #daa520;
-            background: #2d1b00;
-            color: #fff8dc;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background-color: #daa520;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #ffcc00;
-        }
-        .error {
-            color: #ff4d4d;
-            margin-top: 10px;
-        }
-    </style>
+    <meta name="description" content="Bem-vindo à taverna da Divina Opção. Onde cada escolha é uma semente do destino.">
+    <title>Divina Opção - Taverna</title>
+    <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
-    <div class="login-box">
-        <h1>Login do Aventureiro</h1>
-        <form id="login-form">
-            <input type="text" id="usuario" placeholder="Nome de Usuário" required><br>
-            <input type="password" id="senha" placeholder="Senha" required><br>
-            <button type="submit">Entrar</button>
-            <div class="error" id="erro"></div>
-        </form>
-    </div>
-
+    <h1>Bem-vindo à Taverna da Divina Opção</h1>
+    <p class="slogan">Onde cada escolha é uma semente do destino... 🌿</p>
+    <a href="login.html" onclick="playSound()">Login</a>
+    <a href="loja.html" onclick="playSound()">Entrar na Loja</a>
+    <a href="inventario.html" onclick="playSound()">Inventário</a>
+    <a href="personagem.html" onclick="playSound()">Ficha do Personagem</a>
+    <footer>
+        <p>Divina Opção © 2025</p>
+    </footer>
+    <audio id="button-sound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
     <script>
-        document.getElementById("login-form").addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const usuario = document.getElementById("usuario").value.trim();
-            const senha = document.getElementById("senha").value;
-
-            if (usuario === "" || senha === "") {
-                document.getElementById("erro").textContent = "Preencha todos os campos!";
-                return;
-            }
-
-            // Simulação de login bem-sucedido
-            // Futuramente pode ser localStorage, banco, API...
-            sessionStorage.setItem("usuario", usuario);
-
-            window.location.href = "personagem.html"; // redireciona para a ficha
-        });
+        function playSound() {
+            const sound = document.getElementById('button-sound');
+            sound.currentTime = 0;
+            sound.play();
+        }
     </script>
 </body>
 </html>

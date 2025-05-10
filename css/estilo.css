@@ -2,64 +2,88 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-image: url('../assets/fundo.png'); /* Caminho corrigido */
+  font-family: 'Georgia', serif;
+  background-image: url('../assets/fundo.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  text-align: center;
+  color: #f5f5dc;
 }
 
 h1 {
-    font-size: 3em;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: inline-block;
-    padding: 20px;
-    border-radius: 15px;
-    border: 3px solid #8b4513;
-    text-shadow: 2px 2px 4px #000;
-    margin-bottom: 10px;
+  font-size: 3em;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: inline-block;
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px solid #8b4513;
+  text-shadow: 2px 2px 4px #000;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .slogan {
-    font-size: 1.5em;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: block;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  font-size: 1.5em;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: block;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 600px;
 }
 
 a {
-    display: block;
-    margin: 15px auto;
-    font-size: 1.5em;
-    color: #ffdd57;
-    text-decoration: none;
-    background-color: rgba(139, 69, 19, 0.8);
-    padding: 15px 30px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    border: 2px solid #daa520;
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-    width: 250px;
+  display: block;
+  margin: 15px auto;
+  font-size: 1.5em;
+  color: #ffdd57;
+  text-decoration: none;
+  background-color: rgba(139, 69, 19, 0.85);
+  padding: 15px 30px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: 2px solid #daa520;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  width: 250px;
+  max-width: 90%;
 }
 
 a:hover {
-    background-color: #daa520;
-    color: #fff;
-    transform: scale(1.1);
-    text-shadow: 2px 2px 4px #000;
+  background-color: #daa520;
+  color: #fff;
+  transform: scale(1.1);
+  text-shadow: 2px 2px 4px #000;
 }
 
 a:active {
-    transform: scale(1.05);
-    box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+button {
+  margin-top: 20px;
+  background-color: rgba(139, 69, 19, 0.85);
+  color: #ffdd57;
+  font-size: 1em;
+  border: 2px solid #daa520;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #daa520;
+  color: #fff;
+  transform: scale(1.05);
+  text-shadow: 1px 1px 2px #000;
 }
 
 footer {
-    margin-top: 40px;
-    font-size: 0.9em;
-    color: #ccc;
-    text-shadow: 1px 1px 2px #000;
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: #ccc;
+  text-shadow: 1px 1px 2px #000;
 }

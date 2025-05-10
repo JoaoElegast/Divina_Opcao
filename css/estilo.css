@@ -22,11 +22,12 @@ h1 {
 
 .slogan {
     font-size: 1.5em;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: inline-block;
-    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Ajuste de fundo */
+    display: block; /* Faz com que fique abaixo do título */
+    padding: 15px;
     border-radius: 10px;
-    margin-top: 10px;
+    margin-top: 20px; /* Espaço entre o título e a frase */
+    margin-bottom: 20px;
 }
 
 a {

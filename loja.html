@@ -113,8 +113,7 @@
       loja.innerHTML = '';
       estoque.forEach(item=>{
         const d=document.createElement('div'); d.className='item';
-        d.innerHTML=`
-          <h3>${item.nome}</h3>
+        d.innerHTML=`<h3>${item.nome}</h3>
           <p>Preço: <strong>${item.preco} PO</strong></p>
           <p>${item.descricao}</p>
           <p>Em estoque: <strong>${item.qt}</strong></p>

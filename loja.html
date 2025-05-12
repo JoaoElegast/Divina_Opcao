@@ -110,34 +110,43 @@
     mon.textContent = moedas;
 
     function renderLoja(){
-      loja.innerHTML = '';
-      estoque.forEach(item=>{
-        const d=document.createElement('div'); d.className='item';
-        d.innerHTML=`<h3>${item.nome}</h3>
+      loja.innerHTML = ''; // Limpar a loja antes de renderizar os itens
+      estoque.forEach(item => {
+        const d = document.createElement('div'); 
+        d.className = 'item';
+        d.innerHTML = `
+          <h3>${item.nome}</h3>
           <p>Preço: <strong>${item.preco} PO</strong></p>
           <p>${item.descricao}</p>
           <p>Em estoque: <strong>${item.qt}</strong></p>
-          <button ${item.qt===0?'disabled':''} data-id="${item.id}">🛒 Comprar</button>
+          <button ${item.qt === 0 ? 'disabled' : ''} data-id="${item.id}">🛒 Comprar</button>
         `;
-        d.querySelector('button').onclick=()=>comprar(item.id);
+        d.querySelector('button').onclick = () => comprar(item.id);
         loja.appendChild(d);
       });
     }
 
     function comprar(id){
-      const it=estoque.find(x=>x.id===id);
-      if(!it||it.qt===0||moedas<it.preco)return alert('Não é possível comprar.');
-      moedas-=it.preco; it.qt--;
-      inventario.push({ nome:it.nome, precoVenda:Math.floor(it.preco/2), descricao:it.descricao });
-      save('moedas',moedas);
-      save('estoque',estoque);
-      save('inventario',inventario);
-      mon.textContent=moedas;
-      renderLoja();
+      const it = estoque.find(x => x.id === id);
+      if (!it || it.qt === 0 || moedas < it.preco) {
+        return alert('Não é possível comprar.');
+      }
+
+      moedas -= it.preco;  // Subtrai o preço do item das moedas
+      it.qt--;  // Diminui a quantidade do item no estoque
+      inventario.push({ nome: it.nome, precoVenda: Math.floor(it.preco / 2), descricao: it.descricao });
+
+      save('moedas', moedas);
+      save('estoque', estoque);
+      save('inventario', inventario);
+
+      mon.textContent = moedas;
+      renderLoja();  // Re-renderiza a loja com os dados atualizados
+
       alert(`Você comprou ${it.nome} por ${it.preco} PO!`);
     }
 
-    renderLoja();
+    renderLoja(); // Chama a função de renderização da loja logo ao carregar a página
   })();
   </script>
 

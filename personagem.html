@@ -4,147 +4,116 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personagem</title>
-  <style>
-    /* Corpo e fundo da página */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: 'Georgia', serif;
-      background-image: url('/Divina_Opcao/assets/fundo.png'); /* Corrigido caminho */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      text-align: center;
-      color: #f5f5dc;
-    }
-
-    /* Título */
-    h1 {
-      font-size: 3em;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: inline-block;
-      padding: 20px;
-      border-radius: 15px;
-      border: 3px solid #8b4513;
-      text-shadow: 2px 2px 4px #000;
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
-
-    /* Slogan ou subtítulo */
-    .slogan {
-      font-size: 1.5em;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: block;
-      padding: 15px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 600px;
-    }
-
-    /* Links */
-    a {
-      display: block;
-      margin: 15px auto;
-      font-size: 1.5em;
-      color: #ffdd57;
-      text-decoration: none;
-      background-color: rgba(139, 69, 19, 0.85);
-      padding: 15px 30px;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      border: 2px solid #daa520;
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-      width: 250px;
-      max-width: 90%;
-    }
-
-    a:hover {
-      background-color: #daa520;
-      color: #fff;
-      transform: scale(1.1);
-      text-shadow: 2px 2px 4px #000;
-    }
-
-    a:active {
-      transform: scale(1.05);
-      box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
-    }
-
-    /* Botões */
-    button {
-      margin-top: 20px;
-      background-color: rgba(139, 69, 19, 0.85);
-      color: #ffdd57;
-      font-size: 1em;
-      border: 2px solid #daa520;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #daa520;
-      color: #fff;
-      transform: scale(1.05);
-      text-shadow: 1px 1px 2px #000;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #ccc;
-      text-shadow: 1px 1px 2px #000;
-    }
-
-    /* Estilo do quadro do personagem */
-    .character-frame {
-      border: 3px solid #8b4513;
-      padding: 20px;
-      margin: 20px auto;
-      background-color: rgba(0, 0, 0, 0.7);
-      max-width: 800px;
-      border-radius: 15px;
-    }
-
-    .character-title {
-      font-size: 2.5em;
-      color: #f5f5dc;
-      margin-bottom: 20px;
-    }
-
-    /* Detalhes do personagem */
-    .character-detail {
-      font-size: 1.2em;
-      color: #ffdd57;
-      margin: 5px 0;
-    }
-
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Personagem</h1>
-  <div class="slogan">Descubra o poder do seu personagem!</div>
 
-  <!-- Quadro do Personagem -->
-  <div class="character-frame">
-    <div class="character-title">Nome do Personagem</div>
-    <div class="character-detail">Raça: Humano</div>
-    <div class="character-detail">Classe: Guerreiro</div>
-    <div class="character-detail">Nível: 1</div>
-    <div class="character-detail">HP: 100/100</div>
-    <div class="character-detail">Força: 15</div>
-    <div class="character-detail">Destreza: 12</div>
-    <div class="character-detail">Inteligência: 10</div>
-    <div class="character-detail">Habilidades: Ataque Poderoso, Defesa Fortificada</div>
+  <!-- Cabeçalho -->
+  <h1>Perfil do Personagem</h1>
+  <p class="slogan">Bem-vindo ao perfil do seu personagem! Aqui você pode ver os detalhes e editar suas informações.</p>
+
+  <!-- Botão de Voltar ao Início -->
+  <a href="index.html" class="button">Voltar ao Início</a>
+
+  <!-- Exemplo de conteúdo do perfil do personagem -->
+  <div id="personagem">
+    <h2>Detalhes do Personagem</h2>
+    <p><strong>Nome:</strong> João, o Corajoso</p>
+    <p><strong>Raça:</strong> Humano</p>
+    <p><strong>Classe:</strong> Guerreiro</p>
+    <p><strong>Level:</strong> 5</p>
+    <p><strong>Vida:</strong> 30/30</p>
+
+    <!-- Botão Editar Personagem -->
+    <button id="editCharacterBtn" class="button">Editar Personagem</button>
+
+    <!-- Modal de Edição -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Editar Personagem</h2>
+        <form>
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" value="João, o Corajoso"><br><br>
+
+          <label for="raca">Raça:</label>
+          <input type="text" id="raca" name="raca" value="Humano"><br><br>
+
+          <label for="classe">Classe:</label>
+          <input type="text" id="classe" name="classe" value="Guerreiro"><br><br>
+
+          <label for="level">Level:</label>
+          <input type="number" id="level" name="level" value="5"><br><br>
+
+          <label for="vida">Vida:</label>
+          <input type="number" id="vida" name="vida" value="30"><br><br>
+
+          <input type="submit" value="Salvar">
+        </form>
+      </div>
+    </div>
   </div>
 
-  <a href="#">Voltar ao Início</a>
-  <button>Editar Personagem</button>
+  <!-- Estilos para o Modal -->
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
 
-  <footer>© 2025 Divina Opção</footer>
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+
+  <!-- JavaScript para abrir e fechar o modal -->
+  <script>
+    var modal = document.getElementById("editModal");
+    var btn = document.getElementById("editCharacterBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    // Quando o botão de editar personagem for clicado, abrir o modal
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // Fechar o modal quando o "x" for clicado
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // Fechar o modal se o usuário clicar fora dele
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
 </body>
 </html>

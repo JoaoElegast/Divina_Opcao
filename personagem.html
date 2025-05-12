@@ -1,154 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Perfil Editável do Personagem - Divina Opção (D&D)">
-    <title>Perfil Editável - Divina Opção</title>
-    <style>
-        body {
-            font-family: 'Georgia', serif;
-            background-color: #4b2e2e; /* Tom de marrom */
-            color: #f0eada;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-        }
-        .profile-container {
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 2px solid #daa520;
-            border-radius: 15px;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-        }
-        h1 {
-            font-size: 2.5em;
-            margin: 0;
-            text-shadow: 2px 2px 4px #000;
-        }
-        select, button {
-            font-size: 1em;
-            margin: 5px;
-            padding: 5px 10px;
-            border: 2px solid #daa520;
-            border-radius: 5px;
-            background-color: rgba(139, 69, 19, 0.8);
-            color: #fff;
-            cursor: pointer;
-        }
-        button:hover, select:hover {
-            background-color: #daa520;
-            color: #000;
-        }
-        .attributes {
-            margin: 20px 0;
-            text-align: left;
-        }
-        .attribute {
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .attribute span {
-            font-weight: bold;
-            color: #ffdd57;
-        }
-        .selection {
-            margin: 20px 0;
-        }
-        #character-img {
-            max-width: 200px;
-            margin-bottom: 20px;
-        }
-        #back-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #da7e1c;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: #fff;
-        }
-        #back-button:hover {
-            background-color: #f1a23c;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personagem</title>
+  <style>
+    /* Corpo e fundo da página */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background-image: url('/Divina_Opcao/assets/fundo.png'); /* Corrigido caminho */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      text-align: center;
+      color: #f5f5dc;
+    }
+
+    /* Título */
+    h1 {
+      font-size: 3em;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: inline-block;
+      padding: 20px;
+      border-radius: 15px;
+      border: 3px solid #8b4513;
+      text-shadow: 2px 2px 4px #000;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    /* Slogan ou subtítulo */
+    .slogan {
+      font-size: 1.5em;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: block;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    /* Links */
+    a {
+      display: block;
+      margin: 15px auto;
+      font-size: 1.5em;
+      color: #ffdd57;
+      text-decoration: none;
+      background-color: rgba(139, 69, 19, 0.85);
+      padding: 15px 30px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      border: 2px solid #daa520;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+      width: 250px;
+      max-width: 90%;
+    }
+
+    a:hover {
+      background-color: #daa520;
+      color: #fff;
+      transform: scale(1.1);
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    a:active {
+      transform: scale(1.05);
+      box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Botões */
+    button {
+      margin-top: 20px;
+      background-color: rgba(139, 69, 19, 0.85);
+      color: #ffdd57;
+      font-size: 1em;
+      border: 2px solid #daa520;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #daa520;
+      color: #fff;
+      transform: scale(1.05);
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #ccc;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    /* Estilo do quadro do personagem */
+    .character-frame {
+      border: 3px solid #8b4513;
+      padding: 20px;
+      margin: 20px auto;
+      background-color: rgba(0, 0, 0, 0.7);
+      max-width: 800px;
+      border-radius: 15px;
+    }
+
+    .character-title {
+      font-size: 2.5em;
+      color: #f5f5dc;
+      margin-bottom: 20px;
+    }
+
+    /* Detalhes do personagem */
+    .character-detail {
+      font-size: 1.2em;
+      color: #ffdd57;
+      margin: 5px 0;
+    }
+
+  </style>
 </head>
 <body>
-    <h1>Perfil Editável do Personagem</h1>
-    <div class="profile-container">
-        <div class="profile-header">
-            <h2>Nome do Personagem: <span id="nome-personagem">Aragorn</span></h2>
-        </div>
+  <h1>Personagem</h1>
+  <div class="slogan">Descubra o poder do seu personagem!</div>
 
-        <!-- Imagem do personagem interativo -->
-        <div id="character-img-container">
-            <img id="character-img" src="path_to_default_image.png" alt="Imagem do Personagem">
-        </div>
+  <!-- Quadro do Personagem -->
+  <div class="character-frame">
+    <div class="character-title">Nome do Personagem</div>
+    <div class="character-detail">Raça: Humano</div>
+    <div class="character-detail">Classe: Guerreiro</div>
+    <div class="character-detail">Nível: 1</div>
+    <div class="character-detail">HP: 100/100</div>
+    <div class="character-detail">Força: 15</div>
+    <div class="character-detail">Destreza: 12</div>
+    <div class="character-detail">Inteligência: 10</div>
+    <div class="character-detail">Habilidades: Ataque Poderoso, Defesa Fortificada</div>
+  </div>
 
-        <!-- Seleção de atributos -->
-        <div class="selection">
-            <h3>Raça:</h3>
-            <select id="raca" onchange="updateCharacterImage()">
-                <option value="anao">Anão</option>
-                <option value="elfo">Elfo</option>
-                <option value="humano">Humano</option>
-                <!-- Outras opções aqui... -->
-            </select>
-        </div>
-        <div class="selection">
-            <h3>Classe:</h3>
-            <select id="classe" onchange="updateCharacterImage()">
-                <option value="barbaro">Bárbaro</option>
-                <option value="bardo">Bardo</option>
-                <option value="clerigo">Clérigo</option>
-                <!-- Outras opções aqui... -->
-            </select>
-        </div>
+  <a href="#">Voltar ao Início</a>
+  <button>Editar Personagem</button>
 
-        <!-- Atributos -->
-        <div class="attributes">
-            <h3>Atributos:</h3>
-            <div class="attribute">
-                <span>Força:</span>
-                <button onclick="alterarAtributo('forca', -1)">-</button>
-                <span id="forca">18</span>
-                <button onclick="alterarAtributo('forca', 1)">+</button>
-            </div>
-            <!-- Outros atributos... -->
-        </div>
-
-        <!-- Botão de voltar -->
-        <button id="back-button" onclick="window.location.href='index.html'">Voltar ao Início</button>
-    </div>
-
-    <script>
-        const atributos = {
-            forca: 18,
-            destreza: 14,
-            constituicao: 15,
-            inteligencia: 12,
-            sabedoria: 14,
-            carisma: 16,
-        };
-
-        function alterarAtributo(atributo, valor) {
-            if (atributos[atributo] + valor >= 0) {
-                atributos[atributo] += valor;
-                document.getElementById(atributo).textContent = atributos[atributo];
-            }
-        }
-
-        function updateCharacterImage() {
-            const raca = document.getElementById('raca').value;
-            const classe = document.getElementById('classe').value;
-
-            let imagePath = images/${raca}_${classe}.png; // Exemplo de caminho
-            document.getElementById('character-img').src = imagePath;
-        }
-    </script>
+  <footer>© 2025 Divina Opção</footer>
 </body>
 </html>

@@ -122,7 +122,7 @@
         </div>
 
         <!-- Botão de voltar -->
-        <button id="back-button" onclick="goBack()">Voltar ao Início</button>
+        <button id="back-button" onclick="window.location.href='index.html'">Voltar ao Início</button>
     </div>
 
     <script>
@@ -146,13 +146,8 @@
             const raca = document.getElementById('raca').value;
             const classe = document.getElementById('classe').value;
 
-            let imagePath = `images/${raca}_${classe}.png`; // Exemplo de caminho
+            let imagePath = images/${raca}_${classe}.png; // Exemplo de caminho
             document.getElementById('character-img').src = imagePath;
-        }
-
-        // Função para ir até a página inicial
-        function goBack() {
-            window.location.href = 'index.html'; // Redireciona para o index.html
         }
     </script>
 </body>

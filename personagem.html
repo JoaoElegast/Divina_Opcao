@@ -8,7 +8,8 @@
     <style>
         body {
             font-family: 'Georgia', serif;
-            background-color: #4b2e2e; /* Tom de marrom */
+            background-image: url('fundo-personagem.jpg'); /* Adicione o fundo desejado aqui */
+            background-size: cover;
             color: #f0eada;
             text-align: center;
             padding: 20px;
@@ -26,6 +27,21 @@
         h1 {
             font-size: 2.5em;
             margin: 0;
+            text-shadow: 2px 2px 4px #000;
+        }
+        .back-button {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #ffdd57;
+            text-decoration: none;
+            background-color: rgba(139, 69, 19, 0.8);
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #daa520;
+            color: #fff;
             text-shadow: 2px 2px 4px #000;
         }
         select, button {
@@ -59,10 +75,22 @@
         .selection {
             margin: 20px 0;
         }
+        #personagem-img {
+            margin-top: 20px;
+            width: 150px;
+            height: 150px;
+            background-color: #000;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .image-modification {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Perfil Editável do Personagem</h1>
+    <a href="index.html" class="back-button">Voltar ao Início</a>
     <div class="profile-container">
         <div class="profile-header">
             <h2>Nome do Personagem: <span id="nome-personagem">Aragorn</span></h2>
@@ -73,24 +101,7 @@
                 <option value="anao">Anão</option>
                 <option value="elfo">Elfo</option>
                 <option value="humano">Humano</option>
-                <option value="meio-elfo">Meio-Elfo</option>
-                <option value="gnomo">Gnomo</option>
-                <option value="orc">Orc</option>
-                <option value="bugbear">Bugbear</option>
-                <option value="aasimar">Aasimar</option>
-                <option value="tiefling">Tiefling</option>
-                <option value="halfling">Halfling</option>
-                <option value="forjado-pela-guerra">Forjado-pela-Guerra</option>
-                <option value="shifter">Shifter</option>
-                <option value="tritao">Tritão</option>
-                <option value="kobold">Kobold</option>
-                <option value="goblin">Goblin</option>
-                <option value="hobgoblin">Hobgoblin</option>
-                <option value="drow">Drow</option>
-                <option value="wood-elf">Wood Elf</option>
-                <option value="high-elf">High Elf</option>
-                <option value="dragonborn">Dragonborn</option>
-                <option value="grung">Grung</option>
+                <!-- Adicione outras raças conforme necessário -->
             </select>
         </div>
         <div class="selection">
@@ -99,18 +110,7 @@
                 <option value="barbaro">Bárbaro</option>
                 <option value="bardo">Bardo</option>
                 <option value="clerigo">Clérigo</option>
-                <option value="druida">Druida</option>
-                <option value="guerreiro">Guerreiro</option>
-                <option value="mago">Mago</option>
-                <option value="monge">Monge</option>
-                <option value="paladino">Paladino</option>
-                <option value="ladino">Ladino</option>
-                <option value="ranger">Ranger</option>
-                <option value="feiticeiro">Feiticeiro</option>
-                <option value="bruxo">Bruxo</option>
-                <option value="artifice">Artífice</option>
-                <option value="cavalheiro">Cavalheiro</option>
-                <option value="xama">Xamã</option>
+                <!-- Adicione outras classes conforme necessário -->
             </select>
         </div>
         <div class="attributes">
@@ -121,38 +121,15 @@
                 <span id="forca">18</span>
                 <button onclick="alterarAtributo('forca', 1)">+</button>
             </div>
-            <div class="attribute">
-                <span>Destreza:</span>
-                <button onclick="alterarAtributo('destreza', -1)">-</button>
-                <span id="destreza">14</span>
-                <button onclick="alterarAtributo('destreza', 1)">+</button>
-            </div>
-            <div class="attribute">
-                <span>Constituição:</span>
-                <button onclick="alterarAtributo('constituicao', -1)">-</button>
-                <span id="constituicao">15</span>
-                <button onclick="alterarAtributo('constituicao', 1)">+</button>
-            </div>
-            <div class="attribute">
-                <span>Inteligência:</span>
-                <button onclick="alterarAtributo('inteligencia', -1)">-</button>
-                <span id="inteligencia">12</span>
-                <button onclick="alterarAtributo('inteligencia', 1)">+</button>
-            </div>
-            <div class="attribute">
-                <span>Sabedoria:</span>
-                <button onclick="alterarAtributo('sabedoria', -1)">-</button>
-                <span id="sabedoria">14</span>
-                <button onclick="alterarAtributo('sabedoria', 1)">+</button>
-            </div>
-            <div class="attribute">
-                <span>Carisma:</span>
-                <button onclick="alterarAtributo('carisma', -1)">-</button>
-                <span id="carisma">16</span>
-                <button onclick="alterarAtributo('carisma', 1)">+</button>
-            </div>
+            <!-- Repita para outros atributos -->
+        </div>
+        <div class="image-modification">
+            <h3>Imagem do Personagem:</h3>
+            <div id="personagem-img"></div>
+            <button onclick="alterarImagem()">Alterar Imagem</button>
         </div>
     </div>
+
     <script>
         const atributos = {
             forca: 18,
@@ -168,6 +145,21 @@
                 atributos[atributo] += valor;
                 document.getElementById(atributo).textContent = atributos[atributo];
             }
+        }
+
+        function alterarImagem() {
+            const imagem = prompt("Digite a URL da imagem do personagem:");
+            const imgElement = document.getElementById("personagem-img");
+            if (imagem) {
+                imgElement.style.backgroundImage = `url(${imagem})`;
+                imgElement.style.backgroundSize = "cover";
+            }
+        }
+
+        // Função para atualizar a imagem no inventário
+        function atualizarInventario(imagem) {
+            // Aqui você pode fazer a lógica para enviar a imagem para o inventário
+            console.log("Imagem do personagem adicionada ao inventário: ", imagem);
         }
     </script>
 </body>

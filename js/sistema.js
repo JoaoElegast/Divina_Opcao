@@ -24,6 +24,7 @@
 
   const mon = document.getElementById('moedas');
   const loja = document.getElementById('itens-loja');
+  const inv = document.getElementById('inventario'); // <- Certifique-se de ter esse elemento no HTML
   mon.textContent = moedas;
 
   function renderLoja(){
@@ -40,6 +41,22 @@
       `;
       d.querySelector('button').onclick = () => comprar(item.id);
       loja.appendChild(d);
+    });
+    renderInventario();
+  }
+
+  function renderInventario(){
+    if (!inv) return;
+    inv.innerHTML = '';
+    inventario.forEach((item, index)=>{
+      const d = document.createElement('div');
+      d.className = 'item';
+      d.innerHTML = `
+        <h4>${item.nome}</h4>
+        <p>${item.descricao}</p>
+        <button onclick="usarItem(${index})">🎲 Usar item</button>
+      `;
+      inv.appendChild(d);
     });
   }
 
@@ -59,6 +76,26 @@
     renderLoja();
 
     alert(`Você comprou ${it.nome} por ${it.preco} PO!`);
+  }
+
+  window.usarItem = function(index){
+    const item = inventario[index];
+    if (!item) return alert('Item não encontrado.');
+
+    let resultado = '';
+
+    // Detecta rolagem no formato "1dX+Y"
+    const match = item.descricao.match(/1d(\d+)(\+(\d+))?/);
+    if (match){
+      const faces = parseInt(match[1]);
+      const bonus = parseInt(match[3]) || 0;
+      const rolagem = Math.floor(Math.random() * faces) + 1 + bonus;
+      resultado = `Rolagem com ${item.nome}: ${rolagem}`;
+    } else {
+      resultado = `Você usou ${item.nome}.`;
+    }
+
+    alert(resultado);
   }
 
   renderLoja();

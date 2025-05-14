@@ -21,6 +21,8 @@
     border-radius: 15px;
     width: 450px;
     box-shadow: 0 0 15px #8b4513;
+    display: flex;
+    flex-direction: column;
   }
   h1 {
     text-align: center;
@@ -61,8 +63,7 @@
     text-align: center;
   }
   button {
-    margin-top: 25px;
-    width: 100%;
+    margin-top: 20px;
     padding: 12px;
     background-color: #8b4513;
     color: #f0e6d2;
@@ -77,6 +78,13 @@
     background-color: #daa520;
     color: #000;
   }
+  .btn-voltar {
+    background-color: #4b2e05;
+    margin-top: 15px;
+  }
+  .btn-voltar:hover {
+    background-color: #6f4e1e;
+  }
   .resultado {
     margin-top: 20px;
     background: rgba(0,0,0,0.6);
@@ -84,6 +92,7 @@
     border-radius: 10px;
     font-family: monospace;
     white-space: pre-wrap;
+    min-height: 140px;
   }
 </style>
 </head>
@@ -140,12 +149,31 @@
     </div>
   </div>
 
-  <button onclick="mostrarFicha()">Mostrar Ficha</button>
+  <button onclick="salvarFicha()">Salvar Ficha</button>
+  <button class="btn-voltar" onclick="voltarIndex()">Voltar à Taverna</button>
 
   <pre class="resultado" id="resultado"></pre>
 </div>
 
 <script>
+  // Carrega ficha do localStorage ao abrir a página
+  window.onload = function() {
+    const fichaSalva = localStorage.getItem('fichaPersonagem');
+    if (fichaSalva) {
+      const ficha = JSON.parse(fichaSalva);
+      document.getElementById('nome').value = ficha.nome || '';
+      document.getElementById('raca').value = ficha.raca || '';
+      document.getElementById('classe').value = ficha.classe || '';
+      document.getElementById('forca').value = ficha.forca || 10;
+      document.getElementById('destreza').value = ficha.destreza || 10;
+      document.getElementById('constituicao').value = ficha.constituicao || 10;
+      document.getElementById('inteligencia').value = ficha.inteligencia || 10;
+      document.getElementById('sabedoria').value = ficha.sabedoria || 10;
+      document.getElementById('carisma').value = ficha.carisma || 10;
+      mostrarFicha();
+    }
+  };
+
   function mostrarFicha() {
     const nome = document.getElementById('nome').value.trim();
     const raca = document.getElementById('raca').value;
@@ -158,7 +186,7 @@
     const carisma = document.getElementById('carisma').value;
 
     if (!nome || !raca || !classe) {
-      alert('Preencha nome, raça e classe antes de continuar!');
+      document.getElementById('resultado').textContent = 'Preencha nome, raça e classe para ver a ficha completa!';
       return;
     }
 
@@ -178,7 +206,33 @@ Atributos:
 
     document.getElementById('resultado').textContent = ficha;
   }
-</script>
 
-</body>
-</html>
+  function salvarFicha() {
+    const nome = document.getElementById('nome').value.trim();
+    const raca = document.getElementById('raca').value;
+    const classe = document.getElementById('classe').value;
+
+    if (!nome || !raca || !classe) {
+      alert('Preencha nome, raça e classe antes de salvar!');
+      return;
+    }
+
+    const ficha = {
+      nome,
+      raca,
+      classe,
+      forca: document.getElementById('forca').value,
+      destreza: document.getElementById('destreza').value,
+      constituicao: document.getElementById('constituicao').value,
+      inteligencia: document.getElementById('inteligencia').value,
+      sabedoria: document.getElementById('sabedoria').value,
+      carisma: document.getElementById('carisma').value,
+    };
+
+    localStorage.setItem('fichaPersonagem', JSON.stringify(ficha));
+    mostrarFicha();
+    alert('Ficha salva na memória da taverna! 🛡️✨');
+  }
+
+  function voltarInicio() {
+    window.location

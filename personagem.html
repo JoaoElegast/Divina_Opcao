@@ -3,26 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ficha do Personagem - Divina Opção</title>
+<title>Ficha do Personagem Editável</title>
 <style>
   body {
-    background: url('assets/fundo.png') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Georgia', serif;
+    background: #1e1e1e;
     color: #f0e6d2;
-    margin: 0;
-    padding: 20px;
+    font-family: 'Georgia', serif;
     display: flex;
     justify-content: center;
+    padding: 20px;
   }
-  .ficha-container {
-    background-color: rgba(0,0,0,0.75);
+  .container {
+    background: rgba(50, 25, 0, 0.85);
     padding: 30px;
     border-radius: 15px;
-    width: 450px;
-    box-shadow: 0 0 15px #8b4513;
-    display: flex;
-    flex-direction: column;
+    width: 480px;
+    box-shadow: 0 0 20px #a67c00;
   }
   h1 {
     text-align: center;
@@ -30,9 +26,9 @@
     text-shadow: 2px 2px 5px #000;
   }
   label {
+    font-weight: bold;
     display: block;
     margin-top: 15px;
-    font-weight: bold;
   }
   input[type="text"],
   select,
@@ -43,6 +39,7 @@
     border-radius: 6px;
     border: none;
     font-size: 1em;
+    box-sizing: border-box;
   }
   .atributos {
     display: grid;
@@ -51,8 +48,8 @@
     margin-top: 20px;
   }
   .atributo {
-    background: rgba(139,69,19,0.8);
-    padding: 10px;
+    background: #8b5e0a;
+    padding: 12px;
     border-radius: 8px;
     text-align: center;
     font-weight: bold;
@@ -64,6 +61,7 @@
   }
   button {
     margin-top: 20px;
+    width: 100%;
     padding: 12px;
     background-color: #8b4513;
     color: #f0e6d2;
@@ -80,7 +78,7 @@
   }
   .btn-voltar {
     background-color: #4b2e05;
-    margin-top: 15px;
+    margin-top: 10px;
   }
   .btn-voltar:hover {
     background-color: #6f4e1e;
@@ -98,7 +96,7 @@
 </head>
 <body>
 
-<div class="ficha-container">
+<div class="container">
   <h1>Ficha do Personagem</h1>
 
   <label for="nome">Nome do Personagem</label>
@@ -149,90 +147,89 @@
     </div>
   </div>
 
-  <button onclick="salvarFicha()">Salvar Ficha</button>
+  <button id="salvarBtn">Salvar Ficha</button>
   <button class="btn-voltar" onclick="voltarIndex()">Voltar à Taverna</button>
 
-  <pre class="resultado" id="resultado"></pre>
+  <pre class="resultado" id="resultado">Preencha e salve a ficha para ver aqui.</pre>
 </div>
 
 <script>
-  // Carrega ficha do localStorage ao abrir a página
-  window.onload = function() {
-    const fichaSalva = localStorage.getItem('fichaPersonagem');
-    if (fichaSalva) {
-      const ficha = JSON.parse(fichaSalva);
-      document.getElementById('nome').value = ficha.nome || '';
-      document.getElementById('raca').value = ficha.raca || '';
-      document.getElementById('classe').value = ficha.classe || '';
-      document.getElementById('forca').value = ficha.forca || 10;
-      document.getElementById('destreza').value = ficha.destreza || 10;
-      document.getElementById('constituicao').value = ficha.constituicao || 10;
-      document.getElementById('inteligencia').value = ficha.inteligencia || 10;
-      document.getElementById('sabedoria').value = ficha.sabedoria || 10;
-      document.getElementById('carisma').value = ficha.carisma || 10;
-      mostrarFicha();
-    }
-  };
+  const campos = [
+    'nome', 'raca', 'classe',
+    'forca', 'destreza', 'constituicao',
+    'inteligencia', 'sabedoria', 'carisma'
+  ];
 
   function mostrarFicha() {
-    const nome = document.getElementById('nome').value.trim();
-    const raca = document.getElementById('raca').value;
-    const classe = document.getElementById('classe').value;
-    const forca = document.getElementById('forca').value;
-    const destreza = document.getElementById('destreza').value;
-    const constituicao = document.getElementById('constituicao').value;
-    const inteligencia = document.getElementById('inteligencia').value;
-    const sabedoria = document.getElementById('sabedoria').value;
-    const carisma = document.getElementById('carisma').value;
+    const ficha = {};
+    for (const campo of campos) {
+      ficha[campo] = document.getElementById(campo).value;
+    }
 
-    if (!nome || !raca || !classe) {
+    if (!ficha.nome || !ficha.raca || !ficha.classe) {
       document.getElementById('resultado').textContent = 'Preencha nome, raça e classe para ver a ficha completa!';
       return;
     }
 
-    const ficha = `
-Nome: ${nome}
-Raça: ${raca}
-Classe: ${classe}
+    const texto = `
+Nome: ${ficha.nome}
+Raça: ${ficha.raca}
+Classe: ${ficha.classe}
 
 Atributos:
-- Força: ${forca}
-- Destreza: ${destreza}
-- Constituição: ${constituicao}
-- Inteligência: ${inteligencia}
-- Sabedoria: ${sabedoria}
-- Carisma: ${carisma}
+- Força: ${ficha.forca}
+- Destreza: ${ficha.destreza}
+- Constituição: ${ficha.constituicao}
+- Inteligência: ${ficha.inteligencia}
+- Sabedoria: ${ficha.sabedoria}
+- Carisma: ${ficha.carisma}
     `;
 
-    document.getElementById('resultado').textContent = ficha;
+    document.getElementById('resultado').textContent = texto;
   }
 
   function salvarFicha() {
-    const nome = document.getElementById('nome').value.trim();
-    const raca = document.getElementById('raca').value;
-    const classe = document.getElementById('classe').value;
+    const ficha = {};
+    for (const campo of campos) {
+      ficha[campo] = document.getElementById(campo).value.trim();
+    }
 
-    if (!nome || !raca || !classe) {
+    if (!ficha.nome || !ficha.raca || !ficha.classe) {
       alert('Preencha nome, raça e classe antes de salvar!');
       return;
     }
 
-    const ficha = {
-      nome,
-      raca,
-      classe,
-      forca: document.getElementById('forca').value,
-      destreza: document.getElementById('destreza').value,
-      constituicao: document.getElementById('constituicao').value,
-      inteligencia: document.getElementById('inteligencia').value,
-      sabedoria: document.getElementById('sabedoria').value,
-      carisma: document.getElementById('carisma').value,
-    };
-
     localStorage.setItem('fichaPersonagem', JSON.stringify(ficha));
     mostrarFicha();
-    alert('Ficha salva na memória da taverna! 🛡️✨');
+    alert('Ficha salva com sucesso! 🛡️');
+  }
+
+  function carregarFicha() {
+    const fichaSalva = localStorage.getItem('fichaPersonagem');
+    if (fichaSalva) {
+      const ficha = JSON.parse(fichaSalva);
+      for (const campo of campos) {
+        if (ficha[campo]) {
+          document.getElementById(campo).value = ficha[campo];
+        }
+      }
+      mostrarFicha();
+    }
   }
 
   function voltarIndex() {
-    window.location
+    window.location.href = 'index.html';
+  }
+
+  // Atualiza ficha em tempo real
+  for (const campo of campos) {
+    document.getElementById(campo).addEventListener('input', mostrarFicha);
+  }
+
+  document.getElementById('salvarBtn').addEventListener('click', salvarFicha);
+
+  window.onload = carregarFicha;
+</script>
+
+</body>
+</html>

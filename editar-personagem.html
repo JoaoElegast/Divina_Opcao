@@ -1,187 +1,109 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Boneco Editável - Customização</title>
-<style>
-  body {
-    background: #222;
-    color: #eee;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  h1 {
-    margin-bottom: 15px;
-  }
-  .customizer {
-    display: flex;
-    gap: 40px;
-  }
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  select {
-    padding: 6px;
-    border-radius: 6px;
-    border: none;
-    font-size: 1em;
-  }
-  svg {
-    width: 220px;
-    height: 400px;
-    background: #444;
-    border-radius: 15px;
-    box-shadow: 0 0 10px #999 inset;
-  }
-  button {
-    margin-top: 20px;
-    background: #6a4c00;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 12px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  button:hover {
-    background: #bfa136;
-    color: #222;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Editor de Personagem</title>
+  <style>
+    body {
+      background: #1e1e1e;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .personagem {
+      background: #2b2b2b;
+      border: 2px solid #555;
+      border-radius: 10px;
+      padding: 1rem;
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .avatar {
+      width: 128px;
+      height: 128px;
+      background-image: url('https://via.placeholder.com/128');
+      background-size: cover;
+      border: 2px solid #999;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    select, input {
+      padding: 0.3rem;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      background: #333;
+      color: #fff;
+      border: 1px solid #666;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 1rem;
+      background: #444;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #666;
+    }
+  </style>
 </head>
 <body>
+  <h1>Editor de Personagem</h1>
+  <div class="personagem">
+    <div class="avatar" id="avatar"></div>
+    <label for="classe">Classe:</label>
+    <select id="classe">
+      <option value="guerreiro">Guerreiro</option>
+      <option value="mago">Mago</option>
+      <option value="arqueiro">Arqueiro</option>
+    </select>
 
-<h1>Monte Seu Boneco</h1>
+    <label for="armadura">Armadura:</label>
+    <select id="armadura">
+      <option value="leve">Leve</option>
+      <option value="media">Média</option>
+      <option value="pesada">Pesada</option>
+    </select>
 
-<div class="customizer">
+    <label for="arma">Arma:</label>
+    <select id="arma">
+      <option value="espada">Espada</option>
+      <option value="cajado">Cajado</option>
+      <option value="arco">Arco</option>
+    </select>
 
-  <div class="options">
-    <div>
-      <label for="pele">Cor da Pele</label>
-      <select id="pele">
-        <option value="#f5d6b4">Claro</option>
-        <option value="#c68642">Médio</option>
-        <option value="#6b4c2b">Escuro</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="cabelo">Estilo do Cabelo</label>
-      <select id="cabelo">
-        <option value="curto">Curto</option>
-        <option value="longos">Longos</option>
-        <option value="careca">Careca</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="roupa">Cor da Roupa</label>
-      <select id="roupa">
-        <option value="#0a74da">Azul</option>
-        <option value="#da0a0a">Vermelho</option>
-        <option value="#0ada4f">Verde</option>
-      </select>
-    </div>
-
-    <button id="salvar">Salvar Aparência</button>
-    <button id="carregar">Carregar Aparência</button>
+    <button onclick="atualizarAvatar()">Atualizar Visual</button>
+    <br>
+    <button onclick="window.location.href='index.html'">Voltar ao Início</button>
   </div>
 
-  <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg" id="boneco">
+  <script>
+    function atualizarAvatar() {
+      const classe = document.getElementById('classe').value;
+      const armadura = document.getElementById('armadura').value;
+      const arma = document.getElementById('arma').value;
 
-    <!-- Corpo -->
-    <rect id="corpo" x="35" y="80" width="50" height="100" fill="#0a74da" rx="12" ry="12" />
-    
-    <!-- Cabeça -->
-    <circle id="pele" cx="60" cy="50" r="30" fill="#f5d6b4" />
-
-    <!-- Cabelo Curto -->
-    <path id="cabelo-curto" d="M30,30 q30,-20 60,0 q-10,40 -60,0z" fill="#3a1c00" />
-    <!-- Cabelo Longos -->
-    <path id="cabelo-longos" d="M20,20 q40,-40 80,0 q-10,90 -80,0z" fill="#3a1c00" style="display:none" />
-    <!-- Careca -->
-    <circle id="careca" cx="60" cy="35" r="35" fill="#f5d6b4" style="display:none" />
-
-  </svg>
-
-</div>
-
-<script>
-  const peleSelect = document.getElementById('pele');
-  const cabeloSelect = document.getElementById('cabelo');
-  const roupaSelect = document.getElementById('roupa');
-
-  const corpo = document.getElementById('corpo');
-  const pele = document.getElementById('pele');
-  const cabeloCurto = document.getElementById('cabelo-curto');
-  const cabeloLongos = document.getElementById('cabelo-longos');
-  const careca = document.getElementById('careca');
-
-  function atualizarBoneco() {
-    // Pele
-    pele.setAttribute('fill', peleSelect.value);
-    careca.setAttribute('fill', peleSelect.value);
-
-    // Roupa
-    corpo.setAttribute('fill', roupaSelect.value);
-
-    // Cabelo
-    const estilo = cabeloSelect.value;
-    cabeloCurto.style.display = 'none';
-    cabeloLongos.style.display = 'none';
-    careca.style.display = 'none';
-
-    if (estilo === 'curto') {
-      cabeloCurto.style.display = 'block';
-    } else if (estilo === 'longos') {
-      cabeloLongos.style.display = 'block';
-    } else if (estilo === 'careca') {
-      careca.style.display = 'block';
+      // Aqui, trocaríamos as imagens conforme seleção
+      const avatar = document.getElementById('avatar');
+      const url = `images/${classe}_${armadura}_${arma}.png`;
+      avatar.style.backgroundImage = `url('${url}')`;
     }
-  }
-
-  peleSelect.addEventListener('change', atualizarBoneco);
-  cabeloSelect.addEventListener('change', atualizarBoneco);
-  roupaSelect.addEventListener('change', atualizarBoneco);
-
-  document.getElementById('salvar').addEventListener('click', () => {
-    const aparencia = {
-      pele: peleSelect.value,
-      cabelo: cabeloSelect.value,
-      roupa: roupaSelect.value
-    };
-    localStorage.setItem('aparenciaBoneco', JSON.stringify(aparencia));
-    alert('Aparência salva! 🦸‍♂️');
-  });
-
-  document.getElementById('carregar').addEventListener('click', () => {
-    const aparenciaSalva = localStorage.getItem('aparenciaBoneco');
-    if (aparenciaSalva) {
-      const aparencia = JSON.parse(aparenciaSalva);
-      peleSelect.value = aparencia.pele;
-      cabeloSelect.value = aparencia.cabelo;
-      roupaSelect.value = aparencia.roupa;
-      atualizarBoneco();
-      alert('Aparência carregada! 👌');
-    } else {
-      alert('Nenhuma aparência salva encontrada.');
-    }
-  });
-
-  // Inicializa visual na carga da página
-  atualizarBoneco();
-</script>
-
+  </script>
 </body>
 </html>

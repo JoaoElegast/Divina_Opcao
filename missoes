@@ -101,9 +101,18 @@
   </main>
 
   <script>
-    (function(){
-      function load(key, def){ try{ return JSON.parse(localStorage.getItem(key))||def }catch{return def} }
-      function save(key,val){ localStorage.setItem(key,JSON.stringify(val)); }
+    (() => {
+      function load(key, def) {
+        try {
+          return JSON.parse(localStorage.getItem(key)) || def;
+        } catch {
+          return def;
+        }
+      }
+
+      function save(key, val) {
+        localStorage.setItem(key, JSON.stringify(val));
+      }
 
       let moedas = load('moedas', 0);
       let missoes = load('missoes', [
@@ -116,15 +125,15 @@
         { nome: "Expedição ao Bosque Sombrio", descricao: "Explore o Bosque Sombrio e retorne com provas para ganhar 250 PO.", recompensa: 250, concluida: false },
         { nome: "Espionagem nas Terras Inimigas", descricao: "Obtenha informações sobre os inimigos e ganhe 200 PO.", recompensa: 200, concluida: false },
         { nome: "Construção do Forte", descricao: "Ajude a construir um forte para proteger a cidade e ganhe 150 PO.", recompensa: 150, concluida: false },
-        { nome: "Resolução do Mistério do Lago", descricao: "Descubra o segredo do Lago das Sombras e ganhe 350 PO.", recompensa: 350, concluida: false },
+        { nome: "Resolução do Mistério do Lago", descricao: "Descubra o segredo do Lago das Sombras e ganhe 350 PO.", recompensa: 350, concluida: false }
       ]);
+
       const moedasDOM = document.getElementById('moedas');
       const listaDOM = document.getElementById('lista-missoes');
       moedasDOM.textContent = moedas;
 
       function renderMissoes() {
         listaDOM.innerHTML = '';
-
         if (missoes.length === 0) {
           listaDOM.innerHTML = '<p>Nenhuma missão disponível.</p>';
           return;
@@ -145,9 +154,9 @@
         });
       }
 
-      window.concluirMissao = function(index){
+      window.concluirMissao = function(index) {
         const missao = missoes[index];
-        if(!missao || missao.concluida) return;
+        if (!missao || missao.concluida) return;
         moedas += missao.recompensa;
         missoes[index].concluida = true;
         save('moedas', moedas);
@@ -155,7 +164,7 @@
         moedasDOM.textContent = moedas;
         renderMissoes();
         alert(`Você concluiu a missão "${missao.nome}" e ganhou ${missao.recompensa} PO!`);
-      }
+      };
 
       renderMissoes();
     })();

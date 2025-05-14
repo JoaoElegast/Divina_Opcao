@@ -1,36 +1,171 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Acesse a Taverna da Divina Opção e escolha seu caminho.">
   <title>Login - Divina Opção</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-image: url('assets/fundo.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: 'Georgia', serif;
+      color: #f0e6d2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .login-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      border: 3px solid #8b4513;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      width: 80%;
+      max-width: 450px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-shadow: 2px 2px 4px #000;
+      margin-bottom: 20px;
+    }
+
+    .slogan {
+      font-size: 1.2em;
+      color: #f0e6d2;
+      margin-bottom: 25px;
+      font-style: italic;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-size: 1.1em;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 2px solid #8b4513;
+      background: #e6d3a3;
+      font-size: 1em;
+      color: #3b2f1e;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #c19c57;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #3b2f1e;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #dab46a;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.9em;
+      color: #ccc;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+        padding: 15px;
+      }
+      .slogan {
+        font-size: 1em;
+      }
+      input {
+        font-size: 0.9em;
+      }
+      button {
+        font-size: 1em;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Divina Opção</h1>
-  <p class="slogan">Em Apolisgard, cada escolha é uma semente do destino...</p>
+  <div class="login-container">
+    <h1>⚔️ Login - Divina Opção</h1>
+    <p class="slogan">Em Apolisgard, cada escolha é uma semente do destino...</p>
+    
+    <form onsubmit="login(); return false;">
+      <label for="nome">Seu Nome</label>
+      <input type="text" id="nome" placeholder="Digite seu nome" required />
 
-  <div id="form-container">
-    <form id="login-form" class="form hidden">
-      <h2>Entrar</h2>
-      <input type="email" placeholder="Email" id="login-email" required />
-      <input type="password" placeholder="Senha" id="login-senha" required />
-      <button type="submit">Entrar</button>
-      <p class="toggle">Não tem conta? <a href="#" onclick="mostrarRegistro()">Registrar</a></p>
-    </form>
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" placeholder="Digite sua senha" required />
 
-    <form id="register-form" class="form">
-      <h2>Registrar</h2>
-      <input type="text" placeholder="Nome" id="reg-nome" required />
-      <input type="email" placeholder="Email" id="reg-email" required />
-      <input type="password" placeholder="Senha" id="reg-senha" required />
-      <input type="text" placeholder="Nome do Personagem" id="reg-personagem" required />
-      <button type="submit">Criar Conta</button>
-      <p class="toggle">Já tem conta? <a href="#" onclick="mostrarLogin()">Entrar</a></p>
+      <label for="personagem">Nome do Personagem</label>
+      <input type="text" id="personagem" placeholder="Nome do seu personagem" required />
+
+      <button type="submit">Entrar na Taverna</button>
     </form>
   </div>
 
-  <footer>© 2025 Divina Opção. Todos os direitos reservados.</footer>
-  <script src="login.js"></script>
+  <footer>
+    <p>Divina Opção © 2025</p>
+  </footer>
+
+  <audio id="button-sound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+
+  <script>
+    function playSound() {
+      const sound = document.getElementById('button-sound');
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    function login() {
+      const nome = document.getElementById('nome').value.trim();
+      const senha = document.getElementById('senha').value.trim();
+      const personagem = document.getElementById('personagem').value.trim();
+
+      if (!nome || !senha || !personagem) {
+        alert('Preencha todos os campos, bravo aventureiro!');
+        return;
+      }
+
+      // Salvar no localStorage (simples por enquanto)
+      localStorage.setItem('jogador', JSON.stringify({ nome, senha, personagem }));
+
+      // Redirecionar para a loja
+      window.location.href = 'loja.html';
+    }
+  </script>
 </body>
 </html>

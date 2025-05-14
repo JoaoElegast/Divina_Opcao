@@ -1,153 +1,184 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personagem</title>
-  <style>
-    /* Corpo e fundo da página */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: 'Georgia', serif;
-      background-image: url('/Divina_Opcao/assets/fundo.png'); /* Corrigido caminho */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      text-align: center;
-      color: #f5f5dc;
-    }
-
-    /* Título */
-    h1 {
-      font-size: 3em;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: inline-block;
-      padding: 20px;
-      border-radius: 15px;
-      border: 3px solid #8b4513;
-      text-shadow: 2px 2px 4px #000;
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
-
-    /* Slogan ou subtítulo */
-    .slogan {
-      font-size: 1.5em;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: block;
-      padding: 15px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 600px;
-    }
-
-    /* Links */
-    a {
-      display: block;
-      margin: 15px auto;
-      font-size: 1.5em;
-      color: #ffdd57;
-      text-decoration: none;
-      background-color: rgba(139, 69, 19, 0.85);
-      padding: 15px 30px;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      border: 2px solid #daa520;
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-      width: 250px;
-      max-width: 90%;
-    }
-
-    a:hover {
-      background-color: #daa520;
-      color: #fff;
-      transform: scale(1.1);
-      text-shadow: 2px 2px 4px #000;
-    }
-
-    a:active {
-      transform: scale(1.05);
-      box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
-    }
-
-    /* Botões */
-    button {
-      margin-top: 20px;
-      background-color: rgba(139, 69, 19, 0.85);
-      color: #ffdd57;
-      font-size: 1em;
-      border: 2px solid #daa520;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #daa520;
-      color: #fff;
-      transform: scale(1.05);
-      text-shadow: 1px 1px 2px #000;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #ccc;
-      text-shadow: 1px 1px 2px #000;
-    }
-
-    /* Estilo do quadro do personagem */
-    .character-frame {
-      border: 3px solid #8b4513;
-      padding: 20px;
-      margin: 20px auto;
-      background-color: rgba(0, 0, 0, 0.7);
-      max-width: 800px;
-      border-radius: 15px;
-    }
-
-    .character-title {
-      font-size: 2.5em;
-      color: #f5f5dc;
-      margin-bottom: 20px;
-    }
-
-    /* Detalhes do personagem */
-    .character-detail {
-      font-size: 1.2em;
-      color: #ffdd57;
-      margin: 5px 0;
-    }
-
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ficha do Personagem - Divina Opção</title>
+<style>
+  body {
+    background: url('assets/fundo.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Georgia', serif;
+    color: #f0e6d2;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .ficha-container {
+    background-color: rgba(0,0,0,0.75);
+    padding: 30px;
+    border-radius: 15px;
+    width: 450px;
+    box-shadow: 0 0 15px #8b4513;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 5px #000;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  input[type="text"],
+  select,
+  input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1em;
+  }
+  .atributos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .atributo {
+    background: rgba(139,69,19,0.8);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .atributo input {
+    margin-top: 8px;
+    font-weight: normal;
+    text-align: center;
+  }
+  button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 12px;
+    background-color: #8b4513;
+    color: #f0e6d2;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 2px 2px 8px #000;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #daa520;
+    color: #000;
+  }
+  .resultado {
+    margin-top: 20px;
+    background: rgba(0,0,0,0.6);
+    padding: 15px;
+    border-radius: 10px;
+    font-family: monospace;
+    white-space: pre-wrap;
+  }
+</style>
 </head>
 <body>
-  <h1>Personagem</h1>
-  <div class="slogan">Descubra o poder do seu personagem!</div>
 
-  <!-- Quadro do Personagem -->
-  <div class="character-frame">
-    <div class="character-title">Nome do Personagem</div>
-    <div class="character-detail">Raça: Humano</div>
-    <div class="character-detail">Classe: Guerreiro</div>
-    <div class="character-detail">Nível: 1</div>
-    <div class="character-detail">HP: 100/100</div>
-    <div class="character-detail">Força: 15</div>
-    <div class="character-detail">Destreza: 12</div>
-    <div class="character-detail">Inteligência: 10</div>
-    <div class="character-detail">Habilidades: Ataque Poderoso, Defesa Fortificada</div>
+<div class="ficha-container">
+  <h1>Ficha do Personagem</h1>
+
+  <label for="nome">Nome do Personagem</label>
+  <input type="text" id="nome" placeholder="Ex: Arthus, o Destemido" />
+
+  <label for="raca">Raça</label>
+  <select id="raca">
+    <option value="" disabled selected>Selecione uma raça</option>
+    <option value="Humano">Humano</option>
+    <option value="Elfo">Elfo</option>
+    <option value="Anão">Anão</option>
+    <option value="Orc">Orc</option>
+  </select>
+
+  <label for="classe">Classe</label>
+  <select id="classe">
+    <option value="" disabled selected>Selecione uma classe</option>
+    <option value="Guerreiro">Guerreiro</option>
+    <option value="Mago">Mago</option>
+    <option value="Ladino">Ladino</option>
+    <option value="Clérigo">Clérigo</option>
+  </select>
+
+  <div class="atributos">
+    <div class="atributo">
+      Força
+      <input type="number" id="forca" min="1" max="20" value="10" />
+    </div>
+    <div class="atributo">
+      Destreza
+      <input type="number" id="destreza" min="1" max="20" value="10" />
+    </div>
+    <div class="atributo">
+      Constituição
+      <input type="number" id="constituicao" min="1" max="20" value="10" />
+    </div>
+    <div class="atributo">
+      Inteligência
+      <input type="number" id="inteligencia" min="1" max="20" value="10" />
+    </div>
+    <div class="atributo">
+      Sabedoria
+      <input type="number" id="sabedoria" min="1" max="20" value="10" />
+    </div>
+    <div class="atributo">
+      Carisma
+      <input type="number" id="carisma" min="1" max="20" value="10" />
+    </div>
   </div>
 
-  <!-- Botão de Voltar ao Início -->
-  <a href="index.html">Voltar ao Início</a>
+  <button onclick="mostrarFicha()">Mostrar Ficha</button>
 
-  <!-- Botão para Editar Personagem -->
-  <button>Editar Personagem</button>
+  <pre class="resultado" id="resultado"></pre>
+</div>
 
-  <footer>© 2025 Divina Opção</footer>
+<script>
+  function mostrarFicha() {
+    const nome = document.getElementById('nome').value.trim();
+    const raca = document.getElementById('raca').value;
+    const classe = document.getElementById('classe').value;
+    const forca = document.getElementById('forca').value;
+    const destreza = document.getElementById('destreza').value;
+    const constituicao = document.getElementById('constituicao').value;
+    const inteligencia = document.getElementById('inteligencia').value;
+    const sabedoria = document.getElementById('sabedoria').value;
+    const carisma = document.getElementById('carisma').value;
+
+    if (!nome || !raca || !classe) {
+      alert('Preencha nome, raça e classe antes de continuar!');
+      return;
+    }
+
+    const ficha = `
+Nome: ${nome}
+Raça: ${raca}
+Classe: ${classe}
+
+Atributos:
+- Força: ${forca}
+- Destreza: ${destreza}
+- Constituição: ${constituicao}
+- Inteligência: ${inteligencia}
+- Sabedoria: ${sabedoria}
+- Carisma: ${carisma}
+    `;
+
+    document.getElementById('resultado').textContent = ficha;
+  }
+</script>
+
 </body>
 </html>

@@ -1,231 +1,187 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Editar personagem - Divina Opção" />
-  <title>Editar Personagem - Divina Opção</title>
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0; padding: 0;
-      background-image: url('assets/fundo.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      font-family: 'Georgia', serif;
-      color: #f0e6d2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 10px 60px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 2.8em;
-      background-color: rgba(0,0,0,0.7);
-      padding: 20px 30px;
-      border-radius: 15px;
-      border: 3px solid #8b4513;
-      text-shadow: 2px 2px 4px #000;
-      margin-bottom: 20px;
-    }
-    form {
-      background-color: rgba(0,0,0,0.6);
-      padding: 30px 40px;
-      border-radius: 15px;
-      max-width: 480px;
-      width: 100%;
-      box-shadow: 0 0 12px 3px rgba(139,69,19,0.7);
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 1.1em;
-      text-align: left;
-      color: #ffd966;
-      text-shadow: 1px 1px 2px #000;
-    }
-    select, input[type="text"], input[type="number"] {
-      width: 100%;
-      padding: 10px 12px;
-      margin-top: 6px;
-      border-radius: 10px;
-      border: 2px solid #8b4513;
-      background-color: #3b2614;
-      color: #f0e6d2;
-      font-size: 1em;
-      font-family: 'Georgia', serif;
-      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.7);
-      transition: all 0.3s ease;
-    }
-    select:hover, input[type="text"]:hover, input[type="number"]:hover,
-    select:focus, input[type="text"]:focus, input[type="number"]:focus {
-      border-color: #daa520;
-      outline: none;
-      box-shadow: 0 0 8px 2px #daa520;
-      background-color: #4a331a;
-    }
-    button {
-      margin-top: 25px;
-      padding: 15px 0;
-      width: 100%;
-      font-size: 1.3em;
-      font-weight: bold;
-      color: #fff;
-      background-color: #8b4513;
-      border: 2px solid #daa520;
-      border-radius: 15px;
-      cursor: pointer;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-      transition: all 0.3s ease;
-    }
-    button:hover {
-      background-color: #daa520;
-      color: #000;
-      box-shadow: 0 0 15px 4px #daa520;
-      transform: scale(1.05);
-    }
-    button:active {
-      transform: scale(0.95);
-      box-shadow: inset 2px 2px 6px rgba(0,0,0,0.6);
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 30px;
-      font-size: 1.2em;
-      color: #ffdd57;
-      text-decoration: none;
-      border: 2px solid #daa520;
-      padding: 10px 25px;
-      border-radius: 12px;
-      background-color: rgba(139, 69, 19, 0.85);
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-      transition: all 0.3s ease;
-    }
-    .back-link:hover {
-      background-color: #daa520;
-      color: #000;
-      transform: scale(1.05);
-      text-shadow: none;
-    }
-
-    /* Mobile tweaks */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2em;
-        padding: 15px 20px;
-      }
-      form {
-        padding: 20px 25px;
-      }
-      button, .back-link {
-        font-size: 1.1em;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Boneco Editável - Customização</title>
+<style>
+  body {
+    background: #222;
+    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  h1 {
+    margin-bottom: 15px;
+  }
+  .customizer {
+    display: flex;
+    gap: 40px;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  select {
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1em;
+  }
+  svg {
+    width: 220px;
+    height: 400px;
+    background: #444;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #999 inset;
+  }
+  button {
+    margin-top: 20px;
+    background: #6a4c00;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: #bfa136;
+    color: #222;
+  }
+</style>
 </head>
 <body>
-  <h1>Editar Personagem</h1>
-  <form id="edit-char-form" onsubmit="return false;">
-    <label for="char-name">Nome do Personagem</label>
-    <input type="text" id="char-name" name="char-name" placeholder="Digite o nome do personagem" required />
 
-    <label for="player-name">Nome do Jogador</label>
-    <input type="text" id="player-name" name="player-name" placeholder="Seu nome" required />
+<h1>Monte Seu Boneco</h1>
 
-    <label for="gender">Gênero</label>
-    <select id="gender" name="gender" required>
-      <option value="" disabled selected>Selecione o gênero</option>
-      <option value="masculino">Masculino</option>
-      <option value="feminino">Feminino</option>
-      <option value="nao-binario">Não Binário</option>
-      <option value="outro">Outro</option>
-      <option value="prefiro-nao-dizer">Prefiro não dizer</option>
-    </select>
+<div class="customizer">
 
-    <label for="race">Raça</label>
-    <select id="race" name="race" required>
-      <option value="" disabled selected>Selecione a raça</option>
-      <option value="humano">Humano</option>
-      <option value="elfo">Elfo</option>
-      <option value="anão">Anão</option>
-      <option value="halfling">Halfling</option>
-      <option value="gnomo">Gnomo</option>
-      <option value="tiefling">Tiefling</option>
-      <option value="dragonborn">Dragonborn</option>
-      <option value="meio-elfo">Meio-Elfo</option>
-      <option value="meio-orc">Meio-Orc</option>
-    </select>
+  <div class="options">
+    <div>
+      <label for="pele">Cor da Pele</label>
+      <select id="pele">
+        <option value="#f5d6b4">Claro</option>
+        <option value="#c68642">Médio</option>
+        <option value="#6b4c2b">Escuro</option>
+      </select>
+    </div>
 
-    <label for="class">Classe</label>
-    <select id="class" name="class" required>
-      <option value="" disabled selected>Selecione a classe</option>
-      <option value="barbaro">Bárbaro</option>
-      <option value="bardo">Bardo</option>
-      <option value="bruxo">Bruxo</option>
-      <option value="clerigo">Clérigo</option>
-      <option value="druida">Druida</option>
-      <option value="feiticeiro">Feiticeiro</option>
-      <option value="guerreiro">Guerreiro</option>
-      <option value="monge">Monge</option>
-      <option value="paladino">Paladino</option>
-      <option value="patrulheiro">Patrulheiro</option>
-      <option value="ladino">Ladino</option>
-      <option value="mago">Mago</option>
-    </select>
+    <div>
+      <label for="cabelo">Estilo do Cabelo</label>
+      <select id="cabelo">
+        <option value="curto">Curto</option>
+        <option value="longos">Longos</option>
+        <option value="careca">Careca</option>
+      </select>
+    </div>
 
-    <label for="level">Nível</label>
-    <input type="number" id="level" name="level" min="1" max="20" value="1" required />
+    <div>
+      <label for="roupa">Cor da Roupa</label>
+      <select id="roupa">
+        <option value="#0a74da">Azul</option>
+        <option value="#da0a0a">Vermelho</option>
+        <option value="#0ada4f">Verde</option>
+      </select>
+    </div>
 
-    <button type="submit" onclick="salvarPersonagem()">Salvar Personagem</button>
-  </form>
+    <button id="salvar">Salvar Aparência</button>
+    <button id="carregar">Carregar Aparência</button>
+  </div>
 
-  <a href="personagem.html" class="back-link" onclick="playSound()">Voltar à Ficha</a>
+  <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg" id="boneco">
 
-  <audio id="button-sound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
-  
-  <script>
-    function playSound() {
-      const sound = document.getElementById('button-sound');
-      sound.currentTime = 0;
-      sound.play();
+    <!-- Corpo -->
+    <rect id="corpo" x="35" y="80" width="50" height="100" fill="#0a74da" rx="12" ry="12" />
+    
+    <!-- Cabeça -->
+    <circle id="pele" cx="60" cy="50" r="30" fill="#f5d6b4" />
+
+    <!-- Cabelo Curto -->
+    <path id="cabelo-curto" d="M30,30 q30,-20 60,0 q-10,40 -60,0z" fill="#3a1c00" />
+    <!-- Cabelo Longos -->
+    <path id="cabelo-longos" d="M20,20 q40,-40 80,0 q-10,90 -80,0z" fill="#3a1c00" style="display:none" />
+    <!-- Careca -->
+    <circle id="careca" cx="60" cy="35" r="35" fill="#f5d6b4" style="display:none" />
+
+  </svg>
+
+</div>
+
+<script>
+  const peleSelect = document.getElementById('pele');
+  const cabeloSelect = document.getElementById('cabelo');
+  const roupaSelect = document.getElementById('roupa');
+
+  const corpo = document.getElementById('corpo');
+  const pele = document.getElementById('pele');
+  const cabeloCurto = document.getElementById('cabelo-curto');
+  const cabeloLongos = document.getElementById('cabelo-longos');
+  const careca = document.getElementById('careca');
+
+  function atualizarBoneco() {
+    // Pele
+    pele.setAttribute('fill', peleSelect.value);
+    careca.setAttribute('fill', peleSelect.value);
+
+    // Roupa
+    corpo.setAttribute('fill', roupaSelect.value);
+
+    // Cabelo
+    const estilo = cabeloSelect.value;
+    cabeloCurto.style.display = 'none';
+    cabeloLongos.style.display = 'none';
+    careca.style.display = 'none';
+
+    if (estilo === 'curto') {
+      cabeloCurto.style.display = 'block';
+    } else if (estilo === 'longos') {
+      cabeloLongos.style.display = 'block';
+    } else if (estilo === 'careca') {
+      careca.style.display = 'block';
     }
+  }
 
-    function salvarPersonagem() {
-      playSound();
+  peleSelect.addEventListener('change', atualizarBoneco);
+  cabeloSelect.addEventListener('change', atualizarBoneco);
+  roupaSelect.addEventListener('change', atualizarBoneco);
 
-      // Pega valores do formulário
-      const nome = document.getElementById('char-name').value.trim();
-      const jogador = document.getElementById('player-name').value.trim();
-      const genero = document.getElementById('gender').value;
-      const raca = document.getElementById('race').value;
-      const classe = document.getElementById('class').value;
-      const nivel = document.getElementById('level').value;
+  document.getElementById('salvar').addEventListener('click', () => {
+    const aparencia = {
+      pele: peleSelect.value,
+      cabelo: cabeloSelect.value,
+      roupa: roupaSelect.value
+    };
+    localStorage.setItem('aparenciaBoneco', JSON.stringify(aparencia));
+    alert('Aparência salva! 🦸‍♂️');
+  });
 
-      if (!nome || !jogador || !genero || !raca || !classe || !nivel) {
-        alert('Por favor, preencha todos os campos!');
-        return;
-      }
-
-      // Aqui você pode salvar os dados no localStorage ou enviar pra API
-      const personagem = {
-        nome,
-        jogador,
-        genero,
-        raca,
-        classe,
-        nivel
-      };
-
-      localStorage.setItem('personagem', JSON.stringify(personagem));
-
-      alert('Personagem salvo com sucesso!');
-      // Você pode redirecionar para a ficha ou atualizar a página
-      window.location.href = 'personagem.html';
+  document.getElementById('carregar').addEventListener('click', () => {
+    const aparenciaSalva = localStorage.getItem('aparenciaBoneco');
+    if (aparenciaSalva) {
+      const aparencia = JSON.parse(aparenciaSalva);
+      peleSelect.value = aparencia.pele;
+      cabeloSelect.value = aparencia.cabelo;
+      roupaSelect.value = aparencia.roupa;
+      atualizarBoneco();
+      alert('Aparência carregada! 👌');
+    } else {
+      alert('Nenhuma aparência salva encontrada.');
     }
-  </script>
+  });
+
+  // Inicializa visual na carga da página
+  atualizarBoneco();
+</script>
+
 </body>
 </html>

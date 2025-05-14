@@ -1,29 +1,53 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bem-vindo à taverna da Divina Opção. Onde cada escolha é uma semente do destino.">
-    <title>Divina Opção - Taverna</title>
-    <link rel="stylesheet" href="css/estilo.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divina Opção - Entrada</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Bem-vindo à Taverna da Divina Opção</h1>
-    <p class="slogan">Onde cada escolha é uma semente do destino... 🌿</p>
-    <a href="login.html" onclick="playSound()">Login</a>
-    <a href="loja.html" onclick="playSound()">Entrar na Loja</a>
-    <a href="inventario.html" onclick="playSound()">Inventário</a>
-    <a href="personagem.html" onclick="playSound()">Ficha do Personagem</a>
-    <footer>
-        <p>Divina Opção © 2025</p>
-    </footer>
-    <audio id="button-sound" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
-    <script>
-        function playSound() {
-            const sound = document.getElementById('button-sound');
-            sound.currentTime = 0;
-            sound.play();
-        }
-    </script>
+
+  <main class="container">
+    <!-- CARTAZ MEDIEVAL -->
+    <section class="login-card">
+      <!-- Logo ou nome da taverna -->
+      <h1 class="titulo">🏰 Divina Opção</h1>
+      
+      <!-- Mensagem temática -->
+      <p class="mensagem">Escolha seu caminho, aventureiro...</p>
+
+      <!-- Formulário de Login -->
+      <form id="login-form" class="formulario ativo">
+        <input type="text" id="login-nome" placeholder="Nome do Personagem" required />
+        <input type="email" id="login-email" placeholder="E-mail" required />
+        <input type="password" id="login-senha" placeholder="Senha" required />
+        <button type="submit" class="botao">Entrar na taverna</button>
+        <p class="alternar">Não tem conta? <a href="#" id="mostrar-registro">Registrar-se</a></p>
+      </form>
+
+      <!-- Formulário de Registro -->
+      <form id="registro-form" class="formulario">
+        <input type="text" id="registro-nome" placeholder="Seu nome" required />
+        <input type="text" id="registro-personagem" placeholder="Nome do Personagem" required />
+        <input type="email" id="registro-email" placeholder="E-mail" required />
+        <input type="password" id="registro-senha" placeholder="Senha" required />
+        <input type="password" id="registro-confirmar" placeholder="Confirmar Senha" required />
+        <button type="submit" class="botao">Registrar-se como aventureiro</button>
+        <p class="alternar">Já tem conta? <a href="#" id="mostrar-login">Voltar ao login</a></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- Sons de interação -->
+  <audio id="som-click" src="sons/click.mp3" preload="auto"></audio>
+  <audio id="som-erro" src="sons/erro.mp3" preload="auto"></audio>
+  <audio id="som-sucesso" src="sons/sucesso.mp3" preload="auto"></audio>
+
+  <!-- Script JS -->
+  <script src="script.js"></script>
 </body>
 </html>

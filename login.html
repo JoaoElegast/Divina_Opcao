@@ -2,52 +2,35 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Divina Opção - Entrada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Divina Opção</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 </head>
 <body>
+  <h1>Divina Opção</h1>
+  <p class="slogan">Em Apolisgard, cada escolha é uma semente do destino...</p>
 
-  <main class="container">
-    <!-- CARTAZ MEDIEVAL -->
-    <section class="login-card">
-      <!-- Logo ou nome da taverna -->
-      <h1 class="titulo">🏰 Divina Opção</h1>
-      
-      <!-- Mensagem temática -->
-      <p class="mensagem">Escolha seu caminho, aventureiro...</p>
+  <div id="form-container">
+    <form id="login-form" class="form hidden">
+      <h2>Entrar</h2>
+      <input type="email" placeholder="Email" id="login-email" required />
+      <input type="password" placeholder="Senha" id="login-senha" required />
+      <button type="submit">Entrar</button>
+      <p class="toggle">Não tem conta? <a href="#" onclick="mostrarRegistro()">Registrar</a></p>
+    </form>
 
-      <!-- Formulário de Login -->
-      <form id="login-form" class="formulario ativo">
-        <input type="text" id="login-nome" placeholder="Nome do Personagem" required />
-        <input type="email" id="login-email" placeholder="E-mail" required />
-        <input type="password" id="login-senha" placeholder="Senha" required />
-        <button type="submit" class="botao">Entrar na taverna</button>
-        <p class="alternar">Não tem conta? <a href="#" id="mostrar-registro">Registrar-se</a></p>
-      </form>
+    <form id="register-form" class="form">
+      <h2>Registrar</h2>
+      <input type="text" placeholder="Nome" id="reg-nome" required />
+      <input type="email" placeholder="Email" id="reg-email" required />
+      <input type="password" placeholder="Senha" id="reg-senha" required />
+      <input type="text" placeholder="Nome do Personagem" id="reg-personagem" required />
+      <button type="submit">Criar Conta</button>
+      <p class="toggle">Já tem conta? <a href="#" onclick="mostrarLogin()">Entrar</a></p>
+    </form>
+  </div>
 
-      <!-- Formulário de Registro -->
-      <form id="registro-form" class="formulario">
-        <input type="text" id="registro-nome" placeholder="Seu nome" required />
-        <input type="text" id="registro-personagem" placeholder="Nome do Personagem" required />
-        <input type="email" id="registro-email" placeholder="E-mail" required />
-        <input type="password" id="registro-senha" placeholder="Senha" required />
-        <input type="password" id="registro-confirmar" placeholder="Confirmar Senha" required />
-        <button type="submit" class="botao">Registrar-se como aventureiro</button>
-        <p class="alternar">Já tem conta? <a href="#" id="mostrar-login">Voltar ao login</a></p>
-      </form>
-    </section>
-  </main>
-
-  <!-- Sons de interação -->
-  <audio id="som-click" src="sons/click.mp3" preload="auto"></audio>
-  <audio id="som-erro" src="sons/erro.mp3" preload="auto"></audio>
-  <audio id="som-sucesso" src="sons/sucesso.mp3" preload="auto"></audio>
-
-  <!-- Script JS -->
-  <script src="script.js"></script>
+  <footer>© 2025 Divina Opção. Todos os direitos reservados.</footer>
+  <script src="login.js"></script>
 </body>
 </html>

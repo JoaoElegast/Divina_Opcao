@@ -88,6 +88,15 @@
       transform: scale(1.05);
     }
 
+    .btn-voltar {
+      background: #6e4f2f;
+      margin-top: 10px;
+    }
+
+    .btn-voltar:hover {
+      background: #8c6849;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -133,7 +142,11 @@
       <label for="personagem">Nome do Personagem</label>
       <input type="text" id="personagem" placeholder="Nome do seu personagem" required />
 
-      <button type="submit">Entrar na Taverna</button>
+      <button type="submit" onclick="playSound()">Entrar na Taverna</button>
+
+      <a href="index.html" style="text-decoration: none;">
+        <button type="button" class="btn-voltar" onclick="playSound()">⬅️ Voltar ao Início</button>
+      </a>
     </form>
   </div>
 
@@ -160,10 +173,7 @@
         return;
       }
 
-      // Salvar no localStorage (simples por enquanto)
       localStorage.setItem('jogador', JSON.stringify({ nome, senha, personagem }));
-
-      // Redirecionar para a loja
       window.location.href = 'loja.html';
     }
   </script>

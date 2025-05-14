@@ -34,36 +34,28 @@ h1 {
   max-width: 600px;
 }
 
-a {
-  display: block;
-  margin: 15px auto;
-  font-size: 1.5em;
-  color: #ffdd57;
-  text-decoration: none;
-  background-color: rgba(139, 69, 19, 0.85);
-  padding: 15px 30px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+#form-container {
+  background-color: rgba(0,0,0,0.75);
   border: 2px solid #daa520;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-  width: 250px;
-  max-width: 90%;
+  border-radius: 10px;
+  padding: 30px;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 0 20px #000;
 }
 
-a:hover {
-  background-color: #daa520;
-  color: #fff;
-  transform: scale(1.1);
-  text-shadow: 2px 2px 4px #000;
-}
-
-a:active {
-  transform: scale(1.05);
-  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 10px;
   background-color: rgba(139, 69, 19, 0.85);
   color: #ffdd57;
   font-size: 1em;
@@ -86,4 +78,13 @@ footer {
   font-size: 0.9em;
   color: #ccc;
   text-shadow: 1px 1px 2px #000;
+}
+
+.hidden {
+  display: none;
+}
+
+.toggle {
+  margin-top: 10px;
+  font-size: 0.9em;
 }

@@ -4,95 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ficha do Personagem Editável</title>
-<style>
-  body {
-    background: #1e1e1e;
-    color: #f0e6d2;
-    font-family: 'Georgia', serif;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-  .container {
-    background: rgba(50, 25, 0, 0.85);
-    padding: 30px;
-    border-radius: 15px;
-    width: 480px;
-    box-shadow: 0 0 20px #a67c00;
-  }
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    text-shadow: 2px 2px 5px #000;
-  }
-  label {
-    font-weight: bold;
-    display: block;
-    margin-top: 15px;
-  }
-  input[type="text"],
-  select,
-  input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 6px;
-    border: none;
-    font-size: 1em;
-    box-sizing: border-box;
-  }
-  .atributos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 20px;
-  }
-  .atributo {
-    background: #8b5e0a;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: bold;
-  }
-  .atributo input {
-    margin-top: 8px;
-    font-weight: normal;
-    text-align: center;
-  }
-  button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 12px;
-    background-color: #8b4513;
-    color: #f0e6d2;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 2px 2px 8px #000;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background-color: #daa520;
-    color: #000;
-  }
-  .btn-voltar {
-    background-color: #4b2e05;
-    margin-top: 10px;
-  }
-  .btn-voltar:hover {
-    background-color: #6f4e1e;
-  }
-  .resultado {
-    margin-top: 20px;
-    background: rgba(0,0,0,0.6);
-    padding: 15px;
-    border-radius: 10px;
-    font-family: monospace;
-    white-space: pre-wrap;
-    min-height: 140px;
-  }
-</style>
+<link rel="stylesheet" href="css/estilo.css" />
 </head>
 <body>
 
@@ -109,6 +21,13 @@
     <option value="Elfo">Elfo</option>
     <option value="Anão">Anão</option>
     <option value="Orc">Orc</option>
+  </select>
+
+  <label for="sexo">Sexo</label>
+  <select id="sexo">
+    <option value="" disabled selected>Selecione o sexo</option>
+    <option value="Masculino">Masculino</option>
+    <option value="Feminino">Feminino</option>
   </select>
 
   <label for="classe">Classe</label>
@@ -147,6 +66,10 @@
     </div>
   </div>
 
+  <div id="avatar-container">
+    <img id="avatar" src="" alt="Avatar do Personagem" />
+  </div>
+
   <button id="salvarBtn">Salvar Ficha</button>
   <button class="btn-voltar" onclick="voltarIndex()">Voltar à Taverna</button>
 
@@ -155,10 +78,44 @@
 
 <script>
   const campos = [
-    'nome', 'raca', 'classe',
+    'nome', 'raca', 'sexo', 'classe',
     'forca', 'destreza', 'constituicao',
     'inteligencia', 'sabedoria', 'carisma'
   ];
+
+  // Mapeamento das imagens baseadas em raça + sexo
+  const avatares = {
+    Humano: {
+      Masculino: 'assets/humano_masc.png',
+      Feminino: 'assets/humano_fem.png',
+    },
+    Elfo: {
+      Masculino: 'assets/elfo_masc.png',
+      Feminino: 'assets/elfo_fem.png',
+    },
+    Anão: {
+      Masculino: 'assets/anao_masc.png',
+      Feminino: 'assets/anao_fem.png',
+    },
+    Orc: {
+      Masculino: 'assets/orc_masc.png',
+      Feminino: 'assets/orc_fem.png',
+    }
+  };
+
+  function atualizarAvatar() {
+    const raca = document.getElementById('raca').value;
+    const sexo = document.getElementById('sexo').value;
+    const avatarImg = document.getElementById('avatar');
+
+    if (raca && sexo && avatares[raca] && avatares[raca][sexo]) {
+      avatarImg.src = avatares[raca][sexo];
+      avatarImg.style.display = 'block';
+    } else {
+      avatarImg.src = '';
+      avatarImg.style.display = 'none';
+    }
+  }
 
   function mostrarFicha() {
     const ficha = {};
@@ -166,14 +123,15 @@
       ficha[campo] = document.getElementById(campo).value;
     }
 
-    if (!ficha.nome || !ficha.raca || !ficha.classe) {
-      document.getElementById('resultado').textContent = 'Preencha nome, raça e classe para ver a ficha completa!';
+    if (!ficha.nome || !ficha.raca || !ficha.sexo || !ficha.classe) {
+      document.getElementById('resultado').textContent = 'Preencha nome, raça, sexo e classe para ver a ficha completa!';
       return;
     }
 
     const texto = `
 Nome: ${ficha.nome}
 Raça: ${ficha.raca}
+Sexo: ${ficha.sexo}
 Classe: ${ficha.classe}
 
 Atributos:
@@ -186,6 +144,7 @@ Atributos:
     `;
 
     document.getElementById('resultado').textContent = texto;
+    atualizarAvatar();
   }
 
   function salvarFicha() {
@@ -194,8 +153,8 @@ Atributos:
       ficha[campo] = document.getElementById(campo).value.trim();
     }
 
-    if (!ficha.nome || !ficha.raca || !ficha.classe) {
-      alert('Preencha nome, raça e classe antes de salvar!');
+    if (!ficha.nome || !ficha.raca || !ficha.sexo || !ficha.classe) {
+      alert('Preencha nome, raça, sexo e classe antes de salvar!');
       return;
     }
 
@@ -221,10 +180,13 @@ Atributos:
     window.location.href = 'index.html';
   }
 
-  // Atualiza ficha em tempo real
+  // Atualiza ficha e avatar em tempo real
   for (const campo of campos) {
     document.getElementById(campo).addEventListener('input', mostrarFicha);
   }
+
+  document.getElementById('raca').addEventListener('change', mostrarFicha);
+  document.getElementById('sexo').addEventListener('change', mostrarFicha);
 
   document.getElementById('salvarBtn').addEventListener('click', salvarFicha);
 

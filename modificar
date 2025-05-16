@@ -1,100 +1,105 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Customizador de Personagem</title>
+  <meta charset="UTF-8">
+  <title>Forja de Heróis</title>
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #1e1e1e;
-      color: white;
+      background: #201a14 url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+      color: #f4e9d8;
+      font-family: "Cinzel", serif;
+      text-align: center;
       padding: 2rem;
     }
 
-    label {
-      display: block;
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #e2b714;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .painel {
+      background: rgba(0,0,0,0.5);
+      border: 2px solid #a97c50;
+      border-radius: 8px;
+      display: inline-block;
+      padding: 1rem;
       margin-top: 1rem;
+      box-shadow: 0 0 10px #000;
+    }
+
+    label, select {
+      font-size: 1rem;
+      margin: 0.5rem;
+      color: #fff0d9;
     }
 
     select {
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin-bottom: 1rem;
+      background: #3e2f24;
+      border: 1px solid #c0a97d;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
     }
 
-    #preview-container {
-      margin-top: 2rem;
-      width: 64px;
-      height: 64px;
-      overflow: hidden;
-      border: 2px solid #444;
+    img {
+      margin-top: 1.5rem;
+      image-rendering: pixelated;
+      border: 5px solid #2a1d14;
       background: #000;
     }
-
-    #preview {
-      width: 192px; /* 3 frames de 64px */
-      height: 64px;
-      image-rendering: pixelated;
-      background-repeat: no-repeat;
-      animation: walkDown 0.6s steps(3) infinite;
-    }
-
-    @keyframes walkDown {
-      from { background-position: 0 0; }
-      to { background-position: -192px 0; }
-    }
   </style>
+
+  <!-- Fonte medieval -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Customizador de Personagem</h1>
+  <h1>🛡️ Forja de Heróis</h1>
 
-  <label for="genero">Gênero:</label>
-  <select id="genero">
-    <option value="male">Masculino</option>
-    <option value="female">Feminino</option>
-  </select>
+  <div class="painel">
+    <label for="genero">Gênero:</label>
+    <select id="genero">
+      <option value="male">Masculino</option>
+      <option value="female">Feminino</option>
+    </select>
 
-  <label for="raca">Raça:</label>
-  <select id="raca">
-    <option value="white">Humano Branco</option>
-    <option value="brown">Humano Moreno</option>
-    <option value="dark">Humano Negro</option>
-    <option value="orc">Orc</option>
-    <option value="drow">Elfo Negro</option>
-  </select>
+    <label for="raca">Raça:</label>
+    <select id="raca">
+      <option value="white">Humano</option>
+      <option value="black">Humano Negro</option>
+      <option value="elf">Elfo</option>
+      <option value="lizard">Lagarto</option>
+    </select>
 
-  <label for="classe">Classe:</label>
-  <select id="classe">
-    <option value="fighter">Guerreiro</option>
-    <option value="mage">Mago</option>
-    <option value="archer">Arqueiro</option>
-    <option value="thief">Ladrão</option>
-  </select>
+    <label for="classe">Classe:</label>
+    <select id="classe">
+      <option value="fighter">Guerreiro</option>
+      <option value="mage">Mago</option>
+      <option value="cleric">Clérigo</option>
+    </select>
 
-  <div id="preview-container">
-    <h2 style="font-size: 1rem;">Visualização</h2>
-    <div id="preview"></div>
+    <br>
+
+    <img id="personagem" src="" width="64" height="64" alt="Visual do Personagem">
   </div>
 
   <script>
-    const preview = document.getElementById('preview');
+    const imagem = document.getElementById("personagem");
+    const genero = document.getElementById("genero");
+    const raca = document.getElementById("raca");
+    const classe = document.getElementById("classe");
 
-    function updatePreview() {
-      const genero = document.getElementById('genero').value;
-      const raca = document.getElementById('raca').value;
-      const classe = document.getElementById('classe').value;
-
-      const url = `https://raw.githubusercontent.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/master/spritesheets/${genero}_${raca}_${classe}.png`;
-
-      preview.style.backgroundImage = `url('${url}')`;
+    function atualizarSprite() {
+      const urlBase = "https://raw.githubusercontent.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/master/spritesheets/";
+      const nomeArquivo = `${genero.value}_${raca.value}_${classe.value}.png`;
+      imagem.src = urlBase + nomeArquivo;
     }
 
-    document.getElementById('genero').addEventListener('change', updatePreview);
-    document.getElementById('raca').addEventListener('change', updatePreview);
-    document.getElementById('classe').addEventListener('change', updatePreview);
+    // Atualiza a imagem ao mudar qualquer seleção
+    genero.onchange = raca.onchange = classe.onchange = atualizarSprite;
 
-    updatePreview(); // inicial
+    // Inicializa
+    atualizarSprite();
   </script>
 </body>
 </html>

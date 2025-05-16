@@ -1,105 +1,142 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Forja de Heróis</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modificar Personagem - Divina Opção</title>
+  <link rel="stylesheet" href="CSS/estilo.css" />
   <style>
     body {
-      background: #201a14 url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-      color: #f4e9d8;
-      font-family: "Cinzel", serif;
-      text-align: center;
-      padding: 2rem;
+      background: url('ativos/fundo-medieval.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: #f5deb3;
+      padding: 20px;
+    }
+
+    nav {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      color: #f0e68c;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #e2b714;
-      text-shadow: 1px 1px 4px #000;
+      color: #ffd700;
+      text-shadow: 1px 1px 2px #000;
     }
 
-    .painel {
-      background: rgba(0,0,0,0.5);
-      border: 2px solid #a97c50;
-      border-radius: 8px;
-      display: inline-block;
-      padding: 1rem;
-      margin-top: 1rem;
-      box-shadow: 0 0 10px #000;
-    }
-
-    label, select {
-      font-size: 1rem;
-      margin: 0.5rem;
-      color: #fff0d9;
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
     }
 
     select {
-      background: #3e2f24;
-      border: 1px solid #c0a97d;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
+      padding: 5px;
+      margin-bottom: 10px;
+      width: 100%;
+      max-width: 300px;
     }
 
-    img {
-      margin-top: 1.5rem;
-      image-rendering: pixelated;
-      border: 5px solid #2a1d14;
-      background: #000;
+    .preview {
+      margin-top: 20px;
+      border: 2px solid #f0e68c;
+      padding: 10px;
+      width: fit-content;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .btn {
+      background-color: #8b4513;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #a0522d;
     }
   </style>
-
-  <!-- Fonte medieval -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>🛡️ Forja de Heróis</h1>
 
-  <div class="painel">
-    <label for="genero">Gênero:</label>
-    <select id="genero">
-      <option value="male">Masculino</option>
-      <option value="female">Feminino</option>
-    </select>
+  <nav>
+    <a href="índice.html">🏠 Início</a>
+    <a href="personagem.html">🧙 Personagem</a>
+    <a href="inventário.html">🎒 Inventário</a>
+    <a href="loja.html">🏪 Loja</a>
+    <a href="modificar.html">🧩 Modificar</a>
+    <a href="missoes.html">📜 Missões</a>
+    <a href="login.html">🔑 Login</a>
+  </nav>
 
-    <label for="raca">Raça:</label>
-    <select id="raca">
-      <option value="white">Humano</option>
-      <option value="black">Humano Negro</option>
-      <option value="elf">Elfo</option>
-      <option value="lizard">Lagarto</option>
-    </select>
+  <h1>🛠️ Modificar Personagem</h1>
 
-    <label for="classe">Classe:</label>
-    <select id="classe">
-      <option value="fighter">Guerreiro</option>
-      <option value="mage">Mago</option>
-      <option value="cleric">Clérigo</option>
-    </select>
+  <label for="genero">Gênero:</label>
+  <select id="genero">
+    <option>Masculino</option>
+    <option>Feminino</option>
+    <option>Outro</option>
+  </select>
 
-    <br>
+  <label for="raca">Raça:</label>
+  <select id="raca">
+    <option>Humano</option>
+    <option>Elfo</option>
+    <option>Anão</option>
+    <option>Orc</option>
+  </select>
 
-    <img id="personagem" src="" width="64" height="64" alt="Visual do Personagem">
+  <label for="classe">Classe:</label>
+  <select id="classe">
+    <option>Guerreiro</option>
+    <option>Mago</option>
+    <option>Ladino</option>
+    <option>Clérigo</option>
+  </select>
+
+  <label for="aparencia">Aparência (cabelo, roupa, etc):</label>
+  <select id="aparencia">
+    <option>Padrão 1</option>
+    <option>Padrão 2</option>
+    <option>Padrão 3</option>
+  </select>
+
+  <button class="btn" onclick="gerarPersonagem()">🔄 Atualizar Personagem</button>
+
+  <div class="preview">
+    <p><strong>Visual do Personagem:</strong></p>
+    <img id="preview" src="https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/images/body/male/body.png" width="64" height="64" alt="Preview do Personagem" />
   </div>
 
   <script>
-    const imagem = document.getElementById("personagem");
-    const genero = document.getElementById("genero");
-    const raca = document.getElementById("raca");
-    const classe = document.getElementById("classe");
+    function gerarPersonagem() {
+      const genero = document.getElementById("genero").value.toLowerCase();
+      const preview = document.getElementById("preview");
 
-    function atualizarSprite() {
-      const urlBase = "https://raw.githubusercontent.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/master/spritesheets/";
-      const nomeArquivo = `${genero.value}_${raca.value}_${classe.value}.png`;
-      imagem.src = urlBase + nomeArquivo;
+      // Exemplo de mudança simples do corpo com base no gênero
+      if (genero === "masculino") {
+        preview.src = "https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/images/body/male/body.png";
+      } else if (genero === "feminino") {
+        preview.src = "https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/images/body/female/body.png";
+      } else {
+        preview.src = "https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/images/body/male/body.png";
+      }
+
+      // Aqui você pode adicionar mais lógica para classe, raça e aparência!
     }
-
-    // Atualiza a imagem ao mudar qualquer seleção
-    genero.onchange = raca.onchange = classe.onchange = atualizarSprite;
-
-    // Inicializa
-    atualizarSprite();
   </script>
+
 </body>
 </html>

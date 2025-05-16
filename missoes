@@ -1,173 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>🏆 Missões - Divina Opção</title>
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Forja de Heróis Armados</title>
   <style>
     body {
-      background: url('assets/fundo.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'MedievalSharp', cursive;
-      color: #fdf6e3;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: rgba(44, 27, 13, 0.9);
-      padding: 30px;
+      background-color: #2b1e13;
+      background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+      color: #f5e8c7;
+      font-family: Georgia, serif;
       text-align: center;
-      border-bottom: 3px solid #d4af37;
-      box-shadow: 0 4px 10px #000;
+      padding: 2rem;
     }
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #eac15a;
+      text-shadow: 2px 2px 4px #000;
     }
-    main {
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.65);
-      min-height: 80vh;
-      max-width: 900px;
-      margin: 0 auto;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #000;
-    }
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      text-align: center;
-      color: #ffd700;
-    }
-    .missao {
-      background: #362c1a;
-      border: 2px solid #d4af37;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
+
+    .painel {
+      background-color: rgba(0,0,0,0.5);
+      border: 2px solid #a97c50;
+      border-radius: 8px;
+      display: inline-block;
+      padding: 1rem;
+      margin-top: 1rem;
       box-shadow: 0 0 10px #000;
     }
-    .missao h3, .missao p {
-      margin: 5px 0;
+
+    label, select {
+      font-size: 1rem;
+      margin: 0.5rem;
+      color: #ffe;
     }
-    .missao button {
-      background: #d4af37;
-      border: none;
-      color: #000;
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+
+    select {
+      background: #4d3827;
+      border: 1px solid #d1b07f;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
     }
-    .missao button:hover {
-      background: #e5c100;
+
+    .sprites {
+      position: relative;
+      display: inline-block;
+      margin-top: 1.5rem;
     }
-    .botoes {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 40px;
-      flex-wrap: wrap;
+
+    .sprites img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      image-rendering: pixelated;
+      width: 64px;
+      height: 64px;
     }
-    .botao {
-      background: #6b4226;
-      color: #fff;
-      padding: 12px 24px;
-      text-decoration: none;
-      border: 2px solid #d4af37;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .botao:hover {
-      background: #8b5e34;
+
+    .sprites img.base { z-index: 1; }
+    .sprites img.armadura { z-index: 2; }
+    .sprites img.arma { z-index: 3; }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #aa9870;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🏆 Missões - Divina Opção</h1>
-  </header>
+  <h1>⚔️ Forja de Heróis Armados</h1>
 
-  <main>
-    <h2>💰 Ouro: <span id="moedas">0</span> PO</h2>
+  <div class="painel">
+    <label for="genero">Gênero:</label>
+    <select id="genero">
+      <option value="male">Masculino</option>
+      <option value="female">Feminino</option>
+    </select>
 
-    <div id="lista-missoes"></div>
+    <label for="raca">Raça:</label>
+    <select id="raca">
+      <option value="white">Humano</option>
+      <option value="black">Humano Negro</option>
+      <option value="elf">Elfo</option>
+      <option value="lizard">Lagarto</option>
+    </select>
 
-    <div class="botoes">
-      <a href="index.html" class="botao">← Voltar ao Início</a>
+    <label for="classe">Classe:</label>
+    <select id="classe">
+      <option value="fighter">Guerreiro</option>
+      <option value="mage">Mago</option>
+      <option value="cleric">Clérigo</option>
+    </select>
+
+    <br>
+
+    <label for="armadura">Armadura:</label>
+    <select id="armadura">
+      <option value="">Nenhuma</option>
+      <option value="blue_shirt">Camisa Azul</option>
+      <option value="chainmail">Cota de Malha</option>
+      <option value="leather">Couro Batido</option>
+    </select>
+
+    <label for="arma">Arma:</label>
+    <select id="arma">
+      <option value="">Nenhuma</option>
+      <option value="sword">Espada</option>
+      <option value="axe">Machado</option>
+      <option value="mace">Maça</option>
+    </select>
+
+    <div class="sprites" style="width:64px;height:64px;">
+      <img id="base" class="base" src="" alt="Base">
+      <img id="armaduraSprite" class="armadura" src="">
+      <img id="armaSprite" class="arma" src="">
     </div>
-  </main>
+  </div>
+
+  <footer>
+    Criado por Juninho Studios • Powered by LPC Sprites
+  </footer>
 
   <script>
-    (() => {
-      function load(key, def) {
-        try {
-          return JSON.parse(localStorage.getItem(key)) || def;
-        } catch {
-          return def;
-        }
-      }
+    const base = document.getElementById("base");
+    const torso = document.getElementById("armaduraSprite");
+    const arma = document.getElementById("armaSprite");
 
-      function save(key, val) {
-        localStorage.setItem(key, JSON.stringify(val));
-      }
+    const genero = document.getElementById("genero");
+    const raca = document.getElementById("raca");
+    const classe = document.getElementById("classe");
+    const armadura = document.getElementById("armadura");
+    const armaSel = document.getElementById("arma");
 
-      let moedas = load('moedas', 0);
-      let missoes = load('missoes', [
-        { nome: "Derrote o Goblin", descricao: "Elimine um Goblin para ganhar 50 PO.", recompensa: 50, concluida: false },
-        { nome: "Encontre o Artefato", descricao: "Recupere um artefato perdido e ganhe 100 PO.", recompensa: 100, concluida: false },
-        { nome: "Caça ao Tesouro", descricao: "Encontre o tesouro escondido e ganhe 150 PO.", recompensa: 150, concluida: false },
-        { nome: "Proteja a Vila", descricao: "Defenda a vila de monstros invasores para ganhar 200 PO.", recompensa: 200, concluida: false },
-        { nome: "Resgate a Princesa", descricao: "Resgate a princesa sequestrada e ganhe 300 PO.", recompensa: 300, concluida: false },
-        { nome: "Caça ao Dragão", descricao: "Enfrente o dragão e ganhe 500 PO.", recompensa: 500, concluida: false },
-        { nome: "Expedição ao Bosque Sombrio", descricao: "Explore o Bosque Sombrio e retorne com provas para ganhar 250 PO.", recompensa: 250, concluida: false },
-        { nome: "Espionagem nas Terras Inimigas", descricao: "Obtenha informações sobre os inimigos e ganhe 200 PO.", recompensa: 200, concluida: false },
-        { nome: "Construção do Forte", descricao: "Ajude a construir um forte para proteger a cidade e ganhe 150 PO.", recompensa: 150, concluida: false },
-        { nome: "Resolução do Mistério do Lago", descricao: "Descubra o segredo do Lago das Sombras e ganhe 350 PO.", recompensa: 350, concluida: false }
-      ]);
+    function atualizar() {
+      const baseURL = "https://raw.githubusercontent.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/master/spritesheets/";
+      
+      base.src = `${baseURL}${genero.value}_${raca.value}_${classe.value}.png`;
 
-      const moedasDOM = document.getElementById('moedas');
-      const listaDOM = document.getElementById('lista-missoes');
-      moedasDOM.textContent = moedas;
+      torso.src = armadura.value ? `${baseURL}equipment/torso/${armadura.value}.png` : "";
+      arma.src = armaSel.value ? `${baseURL}equipment/main_hand/${armaSel.value}.png` : "";
+    }
 
-      function renderMissoes() {
-        listaDOM.innerHTML = '';
-        if (missoes.length === 0) {
-          listaDOM.innerHTML = '<p>Nenhuma missão disponível.</p>';
-          return;
-        }
-
-        missoes.forEach((missao, index) => {
-          const el = document.createElement('div');
-          el.className = 'missao';
-          el.innerHTML = `
-            <h3>${missao.nome}</h3>
-            <p>${missao.descricao}</p>
-            <p><strong>Recompensa:</strong> ${missao.recompensa} PO</p>
-            ${missao.concluida ? 
-              `<button disabled>✅ Missão Concluída</button>` : 
-              `<button onclick="concluirMissao(${index})">✅ Concluir Missão</button>`}
-          `;
-          listaDOM.appendChild(el);
-        });
-      }
-
-      window.concluirMissao = function(index) {
-        const missao = missoes[index];
-        if (!missao || missao.concluida) return;
-        moedas += missao.recompensa;
-        missoes[index].concluida = true;
-        save('moedas', moedas);
-        save('missoes', missoes);
-        moedasDOM.textContent = moedas;
-        renderMissoes();
-        alert(`Você concluiu a missão "${missao.nome}" e ganhou ${missao.recompensa} PO!`);
-      };
-
-      renderMissoes();
-    })();
+    genero.onchange = raca.onchange = classe.onchange = armadura.onchange = armaSel.onchange = atualizar;
+    atualizar();
   </script>
 </body>
 </html>

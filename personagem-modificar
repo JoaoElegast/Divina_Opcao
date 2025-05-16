@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customizador de Personagem</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #1e1e1e;
+      color: white;
+      padding: 2rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    #preview-container {
+      margin-top: 2rem;
+      width: 64px;
+      height: 64px;
+      overflow: hidden;
+      border: 2px solid #444;
+      background: #000;
+    }
+
+    #preview {
+      width: 192px; /* 3 frames de 64px */
+      height: 64px;
+      image-rendering: pixelated;
+      background-repeat: no-repeat;
+      animation: walkDown 0.6s steps(3) infinite;
+    }
+
+    @keyframes walkDown {
+      from { background-position: 0 0; }
+      to { background-position: -192px 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Customizador de Personagem</h1>
+
+  <label for="genero">Gênero:</label>
+  <select id="genero">
+    <option value="male">Masculino</option>
+    <option value="female">Feminino</option>
+  </select>
+
+  <label for="raca">Raça:</label>
+  <select id="raca">
+    <option value="white">Humano Branco</option>
+    <option value="brown">Humano Moreno</option>
+    <option value="dark">Humano Negro</option>
+    <option value="orc">Orc</option>
+    <option value="drow">Elfo Negro</option>
+  </select>
+
+  <label for="classe">Classe:</label>
+  <select id="classe">
+    <option value="fighter">Guerreiro</option>
+    <option value="mage">Mago</option>
+    <option value="archer">Arqueiro</option>
+    <option value="thief">Ladrão</option>
+  </select>
+
+  <div id="preview-container">
+    <h2 style="font-size: 1rem;">Visualização</h2>
+    <div id="preview"></div>
+  </div>
+
+  <script>
+    const preview = document.getElementById('preview');
+
+    function updatePreview() {
+      const genero = document.getElementById('genero').value;
+      const raca = document.getElementById('raca').value;
+      const classe = document.getElementById('classe').value;
+
+      const url = `https://raw.githubusercontent.com/sanderfrenken/Universal-LPC-Spritesheet-Character-Generator/master/spritesheets/${genero}_${raca}_${classe}.png`;
+
+      preview.style.backgroundImage = `url('${url}')`;
+    }
+
+    document.getElementById('genero').addEventListener('change', updatePreview);
+    document.getElementById('raca').addEventListener('change', updatePreview);
+    document.getElementById('classe').addEventListener('change', updatePreview);
+
+    updatePreview(); // inicial
+  </script>
+</body>
+</html>

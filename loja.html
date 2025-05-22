@@ -1,102 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Inventário - Divina Opção</title>
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>🏰 Loja - Divina Opção</title>
+
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       font-family: 'MedievalSharp', cursive;
-      margin: 0;
-      padding: 0;
-      background: #2d1b10 url('/Divina_Opcao/assets/fundo.png') center/cover no-repeat;
       color: #fdf6e3;
+      margin: 0; padding: 0;
+      background-image: url('/Divina_Opcao/assets/fundo.png'); /* Caminho correto para o GitHub Pages */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
     }
-    .container {
-      max-width: 400px;
-      margin: 40px auto;
+    header {
+      background: rgba(44,27,13,0.9);
       padding: 20px;
-      background: #3a2415;
-      border: 4px solid #d4af37;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #000;
       text-align: center;
+      border-bottom: 3px solid #d4af37;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+    header h1 { font-size: 2.5rem; margin: 0; }
+    main {
+      padding: 20px;
+      background: rgba(0,0,0,0.6);
+      min-height: 80vh;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
     }
-    .slot {
-      background: #1f1308;
-      border: 2px solid #a0793d;
-      border-radius: 6px;
-      height: 64px;
-      width: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .item {
+      background: #362c1a;
+      border: 2px solid #d4af37;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 0 10px #000;
+      transition: transform .2s;
     }
-    .slot img {
-      max-width: 90%;
-      max-height: 90%;
-    }
-    button {
+    .item:hover { transform: scale(1.05); }
+    .item p, .item h3 { margin: 5px 0; }
+    .item button {
       background: #d4af37;
+      border: none;
       color: #000;
-      border: 2px solid #000;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 6px;
       cursor: pointer;
-      font-family: 'MedievalSharp', cursive;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
     }
-    .dice {
-      width: 24px;
-      height: 24px;
+    .item button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+    .botao {
+      display: block;
+      width: fit-content;
+      margin: 30px auto;
+      background: #6b4226;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border: 2px solid #d4af37;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>INVENTÁRIO</h1>
-    <div class="grid" id="inventario">
-      <div class="slot"><img src="/Divina_Opcao/assets/poção.png" alt="Poção"></div>
-      <div class="slot"><img src="/Divina_Opcao/assets/capuz.png" alt="Capuz"></div>
-      <div class="slot"><img src="/Divina_Opcao/assets/espada.png" alt="Espada"></div>
-      <div class="slot"><img src="/Divina_Opcao/assets/livro.png" alt="Livro"></div>
-      <div class="slot"></div>
-      <div class="slot"><img src="/Divina_Opcao/assets/anel.png" alt="Anel"></div>
-      <div class="slot"></div>
-      <div class="slot"></div>
-      <div class="slot"></div>
+
+  <header>
+    <h1>🏰 Loja da Divina Opção</h1>
+    <p>Escolha seus itens para a jornada.</p>
+  </header>
+
+  <main>
+    <h2>💰 Seu Ouro: <span id="moedas">0</span> PO</h2>
+    <div id="itens-loja" class="grid"></div>
+    <div class="botoes">
+      <a href="inventario.html" class="botao">📦 Ir para Inventário</a>
+      <a href="index.html" class="botao">← Voltar ao Início</a>
     </div>
-    <button onclick="usarItem()">
-      USAR ITEM
-      <img src="/Divina_Opcao/assets/dado.png" alt="Dado" class="dice">
-    </button>
-    <audio id="somDado" src="/Divina_Opcao/assets/roll.mp3" preload="auto"></audio>
-  </div>
+  </main>
 
   <script>
-    function usarItem() {
-      const som = document.getElementById('somDado');
-      som.play();
-      const resultado = Math.floor(Math.random() * 20) + 1;
-      alert("🎲 Rolagem de dado: " + resultado);
+    // Carregar o caminho da imagem de fundo do localStorage
+    const imagemFundo = localStorage.getItem('imagemFundo');
+    if (imagemFundo) {
+      document.body.style.backgroundImage = url(${imagemFundo});
     }
-  </script>
-</body>
-</html>
+
+    (function() {
+      function load(key, def) { try { return JSON.parse(localStorage.getItem(key)) || def } catch { return def } }
+      function save
